@@ -6,7 +6,17 @@
     <script src="https://unpkg.com/konva@8.4.2/konva.min.js"></script>
 </head>
 <body>
+<button id="toggle">
+    toggle
+</button>
 <div id="container"></div>
+<script src="../static/js/shapesHelpers.js"></script>
+<script src="../static/js/DrawingBoard.js"></script>
 <script src="../static/js/app.js"></script>
+<script>
+    document.getElementById('toggle').addEventListener('click', function () {
+        drawZero = !drawZero;
+    });
+</script>
 </body>
 </html>
