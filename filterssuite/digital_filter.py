@@ -21,23 +21,26 @@ class DigitalFilter:
     def get_poles(self):
         return self.__poles[:]
 
+    def get_gain(self):
+        return self.__gain
+
     def get_all_pass(self):
         return self.__all_pass[:]
 
     # Define setters
-    def zeros(self, zeros: list) -> None:
+    def set_zeros(self, zeros: list) -> None:
         """
         Set the zeros of the filter.
         """
-        self.__zeros = zeros
+        self.__zeros = [*self.__zeros, *zeros]
 
-    def poles(self, poles: list) -> None:
+    def set_poles(self, poles: list) -> None:
         """
         Set the poles of the filter.
         """
-        self.__poles = poles
+        self.__poles = [*self.__poles, *poles]
 
-    def gain(self, gain: float) -> None:
+    def set_gain(self, gain: float) -> None:
         """
         Set the gain of the filter.
         """
@@ -61,18 +64,46 @@ class DigitalFilter:
         phase = np.unwrap(np.angle(response))   # `np.unwrap` to remove phase discontinuities
         return w, magnitude, phase
 
-    def series_all_pass(self, a_list: list):
+    def add_all_pass(self, a: complex):
+        """
+        Add one all-pass filter with coefficient a to the filter.
+        """
+        self.__all_pass.append(a)
+        self.__poles.append(a)
+        self.__zeros.append(1 / np.conj(a))
+
+    def add_list_all_pass(self, a_list: list):
         """
         Add one or more all-pass filters with coefficient a to the filter.
         """
         self.__all_pass = a_list.copy()
         self.__poles = [*self.__poles, *a_list]
-        b = []
+        b_list = []
         for i in range(len(a_list)):
-            b.append(1 / np.conj(a_list[i]))
-        self.__zeros = [*self.__zeros, *b]
+            b_list.append(1 / np.conj(a_list[i]))
+        self.__zeros = [*self.__zeros, *b_list]
 
-    def remove_all_pass(self):
+    def remove_zero(self, zero:complex):
+        self.__zeros.remove(zero)
+
+    def remove_pole(self, pole:complex):
+        self.__poles.remove(pole)
+
+    def remove_all_zeros(self):
+        self.__zeros = []
+
+    def remove_all_poles(self):
+        self.__poles= []
+
+    def remove_all_pass(self, a:complex):
+        """
+        Remove one all-pass filter with coefficient a to the filter.
+        """
+        self.__all_pass.remove(a)
+        self.__poles.remove(a)
+        self.__zeros.remove(1 / np.conj(a))
+
+    def remove_all_all_passes(self):
         """
         Remove all all-pass filters from the filter.
         """
@@ -80,10 +111,7 @@ class DigitalFilter:
         self.__poles = self.__poles[0:len(self.__poles) - len(self.__all_pass)]
         self.__all_pass = []
 
-    def one_all_pass(self, a: complex):
-        """
-        Add one all-pass filter with coefficient a to the filter.
-        """
-        self.__all_pass.append(a)
-        self.__poles.append(a)
-        self.__zeros.append(1 / np.conj(a))
+    def apply_filter(self, values: list) -> []:
+        numerator , denominator = signal.zpk2tf(self.__zeros,self.__poles, self.__gain)
+        filtered_signal = np.real(signal.lfilter(numerator, denominator, values))
+        return filtered_signal
