@@ -1,6 +1,7 @@
 /******************************************************************************
  *
  * File Name  : Drawing Board.js
+ * Type       : Class
  * Description: Konva Stage Drawing Board Class
  * Author     : Ibrahim Mohamed
  *
@@ -8,12 +9,24 @@
 
 class DrawingBoard {
 
+    #circleRadius;
+    #circleCenterX;
+    #circleCenterY;
+    #width;
+    #height;
+
     constructor(divId, width, height) {
+        this.#width = width;
+        this.#height = height;
+        this.#circleRadius = width / 2 - 20;
+        this.#circleCenterX = width / 2;
+        this.#circleCenterY = height / 2;
 
         this.stage = new Konva.Stage({
             container: divId,
             width: width,
-            height: height
+            height: height,
+            backgroundColor: 'red',
         });
 
         this.layer = new Konva.Layer();
@@ -22,41 +35,65 @@ class DrawingBoard {
         this.polesShapes = [];
 
         this.stage.add(this.layer);
-
-        let [xAxis, yAxis] = this.#createAxes(width, height);
-        let circle = this.#createUnitCircle(boardWidth/ 2, boardHeight / 2, 230);
-
-        this.layer.add(xAxis);
-        this.layer.add(yAxis);
-        this.layer.add(circle);
-
+        this.#createAxes(width, height);
+        this.#createUnitCircle(boardWidth / 2, boardHeight / 2, this.#circleRadius);
         this.stage.draw();
     }
 
-    createPole = (xPos = 200,yPos = 200) => {
-        let points = [
-            xPos    , yPos      ,
-            xPos+10  , yPos+10    ,
-            xPos+5  , yPos+5    ,
-            xPos    , yPos+10    ,
-            xPos+10  , yPos      ,
-        ]
-        let pole = drawLine(points, true)
+    /**  ------------------------------------------ Getters ------------------------------------------ **/
+
+    get getZeroes() {
+        return this.zeroesShapes;
+    }
+
+    get getPoles() {
+        return this.polesShapes;
+    }
+
+    get getCircleRadius() {
+        return this.#circleRadius;
+    }
+
+    get getCircleCenterX() {
+        return this.#circleCenterX;
+    }
+
+    get getCircleCenterY() {
+        return this.#circleCenterY;
+    }
+
+    /**  ------------------------------------------ Methods ------------------------------------------ **/
+
+    createPole = (xPos = 200, yPos = 200) => {
+        let pole = drawPole(xPos, yPos)
+        this.polesShapes.push(pole);
         this.layer.add(pole).draw();
     }
 
-    createZero = (xPos = 200,yPos = 200) => {
+    createZero = (xPos = 200, yPos = 200) => {
         let zero = drawCircle(xPos, yPos, 6, true)
+        this.zeroesShapes.push(zero);
         this.layer.add(zero).draw();
     }
 
-    #createAxes(width, height) {
-        let yLine = drawLine([width / 2, 0, width / 2, height])
-        let xLine = drawLine([0, height / 2, width, height / 2])
-        return [xLine, yLine];
+    clearBoard = __ => {
+        this.zeroesShapes = [];
+        this.polesShapes = [];
+        this.layer.destroyChildren();
+        this.#createAxes(this.#width, this.#height);
+        this.#createUnitCircle(this.#width / 2, this.#width / 2, this.#circleRadius);
+        this.stage.draw();
+    }
+
+    #createAxes(axisWidth, axisHeight) {
+        let yLine = drawLine([axisWidth / 2, 0, axisWidth / 2, axisHeight])
+        let xLine = drawLine([0, axisHeight / 2, axisWidth, axisHeight / 2])
+        this.layer.add(yLine);
+        this.layer.add(xLine);
     }
 
     #createUnitCircle(xCenter, yCenter, radius) {
-        return drawCircle(xCenter, yCenter, radius, false, 'blue', 1);
+        let circle = drawCircle(xCenter, yCenter, radius, false, 'blue', 1);
+        this.layer.add(circle);
     }
 }

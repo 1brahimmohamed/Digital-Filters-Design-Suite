@@ -1,6 +1,7 @@
 /******************************************************************************
  *
  * File Name  : Filter.js
+ * Type       : Class
  * Description: Digital Filter Class
  * Author     : Ibrahim Mohamed
  *
@@ -57,46 +58,58 @@ class Filter{
     exportFilterToCSV() {
         let csv = []        // create object 'csv' to store filter data
         for (let i = 0; i < this.#zeros.length; ++i) {
-            csv.push('z' , this.#zeros[i].x, this.#zeros[i].y)
+            csv.push(['z' , this.#zeros[i].x, this.#zeros[i].y])
         }
 
         for (let i = 0; i < this.#poles.length; ++i) {
-            csv.push('p' , this.#poles[i].x, this.#poles[i].y)
+            csv.push(['p' , this.#poles[i].x, this.#poles[i].y])
         }
 
-        console.log(csv)
+        for (let i = 0; i < this.#allPassFilters.length; ++i) {
+            csv.push(['a' , this.#allPassFilters[i].real, this.#allPassFilters[i].imaginary])
+        }
 
-        /**  object returned to be converted to CSV   **/
-        return csv
-    }
 
-    importFilterFromCSV(csv) {
-        let importedZeros = []
-        let importedPoles = []
-        let keys = Object.keys(csv[0])
+        let downloadedCSV = 'type,x,y\n';
 
-        csv.map((row) => {
-            if (row[keys[0]] === 'z') {
-                importedZeros.push({x: row[keys[1]], y: row[keys[2]]})
-            } else if (row[keys[0]] === 'p') {
-                importedPoles.push({x: row[keys[1]], y: row[keys[2]]})
-            }
+        csv.forEach((row) => {
+            console.log(row)
+            downloadedCSV += row.join(',');
+            downloadedCSV += "\n";
         })
 
-        this.#zeros = importedZeros;
-        this.#poles = importedPoles;
+
+        /**  object returned to be converted to CSV   **/
+        return downloadedCSV
+    }
+
+    /**  ------------------------------------------ Methods ------------------------------------------ **/
+
+    addZero(zeroObj) {
+        this.#zeros.push(zeroObj);
+    };
+
+    addPole(poleObj) {
+        this.#poles.push(poleObj);
+    };
+
+    clearZeros() {
+        this.#zeros = [];
+    }
+
+    clearPoles() {
+        this.#poles = [];
     }
 
     /**  ------------------------------------------ Setters ------------------------------------------ **/
 
+    set setZeros(zeros){
+        this.#zeros = zeros;
+    }
 
-    addZero(stageX, stageY) {
-        // @TODO Implement adding zeros to the filter
-    };
-
-    addPole(stageX, stageY) {
-        // @TODO Implement adding #poles to the filter
-    };
+    set setPoles(poles){
+        this.#poles = poles;
+    }
 
     set setMagnitudeResponseData([xData, yData]){
         this.#magnitudeResponseData[0].x = xData;
@@ -119,6 +132,14 @@ class Filter{
         return this.#zeros;
     }
 
+    get getPoles() {
+        return this.#poles;
+    }
+
+    get getAllPassFilters() {
+        return this.#allPassFilters;
+    }
+
     get getMagnitudeResponse(){
         return [this.#magnitudeResponseData[0].x, this.#magnitudeResponseData[0].y];
     }
@@ -130,7 +151,6 @@ class Filter{
     get getCorrectedPhaseResponse(){
         return [this.#correctedPhaseResponseData[0].x, this.#correctedPhaseResponseData[0].y];
     }
-
 
     get getMagnitudeResponseData(){
         return this.#magnitudeResponseData;
@@ -144,12 +164,5 @@ class Filter{
         return this.#correctedPhaseResponseData;
     }
 
-    get getPoles() {
-        return this.#poles;
-    }
-
-    get getAllPassFilters() {
-        return this.#allPassFilters;
-    }
 
 }

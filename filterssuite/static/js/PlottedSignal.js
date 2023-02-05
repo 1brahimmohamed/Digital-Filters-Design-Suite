@@ -1,5 +1,5 @@
 class PlottedSignal {
-    constructor(divID, xData, yData) {
+    constructor(divID, xData, yData, xLabel = 'frequency (Hz)', yLabel = 'magnitude (dB)') {
 
         this.divID = divID;
 
@@ -22,22 +22,23 @@ class PlottedSignal {
         this.layout = {
             xaxis: {
                 title: {
-                    text: 'time (s)',
+                    text: xLabel,
                 },
-                range: [0, 4]
             },
             yaxis: {
                 title: {
-                    text: 'amplitude (mV)'
+                    text: yLabel,
                 }
             },
             font: {
                 size: 12
             },
         };
+
+        this.#plot();
     }
 
-    plot() {
+    #plot() {
         Plotly.newPlot(
             this.divID,
             this.data,
@@ -47,6 +48,7 @@ class PlottedSignal {
     }
 
     updatePlot(data) {
+
         Plotly.newPlot(
             this.divID,
             [{

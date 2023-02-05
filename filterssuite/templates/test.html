@@ -4,18 +4,51 @@
     <meta charset="utf-8" />
     <title>Konva Circle Demo</title>
     <script src="https://unpkg.com/konva@8.4.2/konva.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
 <button id="toggle">
     toggle
+</button><button id="zeross">
+    zeros shape
 </button>
+<button id="poless">
+    poles shape
+</button>
+<button id="zorar">
+    poles shape
+</button>
+<a id="download-btn">
+    <button>Download</button>
+</a>
+
+<input type="file" id="upload-btn">
 <div id="container"></div>
+
+<div id="container2">
+    <div id="plot-1" style="width: 30%; display: inline-block"></div>
+    <div id="plot-2" style="width: 30%; display: inline-block"></div>
+</div>
 <script src="../static/js/shapesHelpers.js"></script>
 <script src="../static/js/DrawingBoard.js"></script>
+<script src="../static/js/Filter.js"></script>
+<script src="../static/js/request.js"></script>
+<script src="../static/js/PlottedSignal.js"></script>
 <script src="../static/js/app.js"></script>
 <script>
     document.getElementById('toggle').addEventListener('click', function () {
         drawZero = !drawZero;
+    });
+    document.getElementById('zeross').addEventListener('click', function () {
+        console.log(unitCircleBoard.getZeroes)
+    });
+    document.getElementById('poless').addEventListener('click', function () {
+        console.log(unitCircleBoard.getPoles)
+    });
+    document.getElementById('zorar').addEventListener('click', function () {
+        unitCircleBoard.layer.destroyChildren();
     });
 </script>
 </body>

@@ -1,7 +1,9 @@
-from digital_filter import *
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+
+import json
+from .digital_filter import *
 
 
 
@@ -15,20 +17,27 @@ def home(request):
 
 @csrf_protect
 @csrf_exempt
-def create(request):
+def filter_response(request):
     if request.method == 'POST':
-        # file = request.FILES['file']
+        req = json.loads(request.body)
+
+        zeros = req['zeros']
+        poles = req['poles']
+
+        print(zeros)
+        print('-'*100)
+        print(poles)
 
         # temporary zeros & poles
-        zeros = [{1, 2}, {0.2, 1}]
-        poles = [{0.1, 2}, {2, 1}]
+
         complex_zeros = []
         complex_poles = []
 
         for z in zeros:
-            complex_zeros.append(complex(list(z)[0], list(z)[1]))
+            print(z)
+            complex_zeros.append(complex(z['x'], z['y']))
         for p in poles:
-            complex_poles.append(complex(list(p)[0], list(p)[1]))
+            complex_poles.append(complex(p['x'], p['y']))
 
         digital_filter = DigitalFilter(complex_zeros, complex_poles)
         normalized_freq, magnitude, phase = digital_filter.response()
@@ -37,6 +46,8 @@ def create(request):
 
         return JsonResponse(
             {
-                'Status': "Saved Successfully",
+                'normalizedFrequency': list(normalized_freq),
+                'magnitudeResponse': list(magnitude),
+                'phaseResponse': list(phase)
             }
         )

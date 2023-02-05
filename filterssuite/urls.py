@@ -13,4 +13,5 @@ from . import views
 
 urlpatterns = [
     path("home/", views.home, name="home"),
+    path("get-filter-response/", views.filter_response, name="get-filter-response"),
 ]
