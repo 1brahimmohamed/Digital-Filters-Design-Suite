@@ -51,5 +51,34 @@ downloadBtn.addEventListener('click', (e) => {
     downloadBtn.download = 'filter.csv';
 });
 
+uploadBtn.addEventListener('change', (e) => {
+    let file = e.target.files[0],
+        fileReader = new FileReader();
 
+    fileReader.readAsText(file)
+    fileReader.onload = function (ev) {
+        let csv = ev.target.result,
+            parsedFile = d3.csvParse(csv)
+
+        let keys = Object.keys(parsedFile[0])
+
+        unitCircleBoard.clearBoard();
+
+        parsedFile.map((d) => {
+            let xNormal = d[keys[1]],
+                yNormal = d[keys[2]],
+                xActual =   xNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterX,
+                yActual = - yNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterY;
+
+            if (d[keys[0]] === 'z') {
+                unitCircleBoard.createZero(xActual, yActual);
+            }
+            else if (d[keys[0]] === 'p') {
+                unitCircleBoard.createPole(xActual, yActual);
+            }
+        })
+
+        sendRequest();
+    }
+});
 
