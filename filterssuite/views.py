@@ -24,12 +24,6 @@ def filter_response(request):
         zeros = req['zeros']
         poles = req['poles']
 
-        print(zeros)
-        print('-'*100)
-        print(poles)
-
-        # temporary zeros & poles
-
         complex_zeros = []
         complex_poles = []
 
@@ -43,7 +37,6 @@ def filter_response(request):
         normalized_freq, magnitude, phase = digital_filter.response()
 
         # plot in frontend normalized_freq (0.0 => pi) in x_axis, magnitude or phase in y_axis
-
         return JsonResponse(
             {
                 'normalizedFrequency': list(normalized_freq),
