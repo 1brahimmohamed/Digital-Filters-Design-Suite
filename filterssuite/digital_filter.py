@@ -83,10 +83,10 @@ class DigitalFilter:
             b_list.append(1 / np.conj(a_list[i]))
         self.__zeros = [*self.__zeros, *b_list]
 
-    def remove_zero(self, zero:complex):
+    def remove_zero(self, zero: complex):
         self.__zeros.remove(zero)
 
-    def remove_pole(self, pole:complex):
+    def remove_pole(self, pole: complex):
         self.__poles.remove(pole)
 
     def remove_all_zeros(self):
@@ -112,6 +112,6 @@ class DigitalFilter:
         self.__all_pass = []
 
     def apply_filter(self, values: list) -> []:
-        numerator , denominator = signal.zpk2tf(self.__zeros,self.__poles, self.__gain)
+        numerator, denominator = signal.zpk2tf(self.__zeros,self.__poles, self.__gain)
         filtered_signal = np.real(signal.lfilter(numerator, denominator, values))
         return filtered_signal
