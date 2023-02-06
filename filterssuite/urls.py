@@ -14,4 +14,6 @@ from . import views
 urlpatterns = [
     path("home/", views.home, name="home"),
     path("get-filter-response/", views.filter_response, name="get-filter-response"),
+    path("get-allpass-response/", views.test_all_pass, name="get-allpass-response"),
+    path("filter-signal/", views.signal_filtering, name="filter-signal"),
 ]
