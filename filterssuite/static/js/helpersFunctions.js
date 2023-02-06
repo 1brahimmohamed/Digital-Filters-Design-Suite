@@ -11,13 +11,14 @@ let shapesDefaultColor = 'black'
 
 /**
  * Function to check drawing on the canvas
- * @param x_current
- * @param y_current
- * @param zerosArr
- * @param polesArr
+ * @param {number} x_current - x coordinate of the mouse
+ * @param {number} y_current - y coordinate of the mouse
+ * @param {array} zerosArr   - array of zeros
+ * @param {array} polesArr   - array of poles
  * @returns {boolean}
  **/
 const checkIfDrawing = (x_current, y_current, zerosArr, polesArr) => {
+
     // check if the mouse position is on one of our drawn shapes
     let offset = 1;
 
@@ -52,6 +53,10 @@ const checkIfDrawing = (x_current, y_current, zerosArr, polesArr) => {
 }
 
 
+/**
+ * Function to create the realtime mouse signal pad
+ * @returns {Konva.Stage}
+ */
 const createMouseSignalPad = __ => {
     let stg = new Konva.Stage({
         container: 'pad',
@@ -76,12 +81,12 @@ const createMouseSignalPad = __ => {
 
 /**
  * Function to draw a circle on the canvas
- * @param circX
- * @param circY
- * @param circRadius
- * @param circStroke
- * @param circDraggable
- * @param circStrokeWidth
+ * @param {number} circX            - x coordinate of the circle
+ * @param {number} circY            - y coordinate of the circle
+ * @param {number} circRadius       - radius of the circle
+ * @param {number} circStroke       - stroke color of the circle
+ * @param {boolean} circDraggable   - is the circle draggable
+ * @param {number} circStrokeWidth  - stroke width of the circle
  * @returns {Konva.Circle}
  **/
 const drawCircle = (
@@ -104,12 +109,12 @@ const drawCircle = (
 
 /**
  * Function to draw a line on the canvas
- * @param linePoints
- * @param lineDraggable
- * @param lineStroke
- * @param lineStrokeWidth
- * @param lineCap
- * @param lineJoin
+ * @param {number} linePoints       - array of points that make the line
+ * @param lineDraggable             - is the line draggable
+ * @param {number} lineStroke       - stroke color of the line
+ * @param {number} lineStrokeWidth  - stroke width of the line
+ * @param {string} lineCap          - line cap
+ * @param {string} lineJoin         - line join
  * @returns {Konva.Line}
  **/
 const drawLine = (
@@ -132,8 +137,8 @@ const drawLine = (
 
 /**
  * Function to draw a pole on the canvas
- * @param xPos
- * @param yPos
+ * @param {number} xPos      - x coordinate of the pole
+ * @param {number} yPos      - y coordinate of the pole
  * @returns {Konva.Group}
  **/
 const drawPole = (xPos, yPos) => {

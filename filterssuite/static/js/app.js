@@ -11,6 +11,7 @@ const boardWidth    = 500,
       boardHeight   = 500;
 
 let drawZero = true;
+let selectedAllPassFilter = null;
 
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
@@ -90,14 +91,27 @@ uploadBtn.addEventListener('change', (e) => {
 
 addAllPassBtn.addEventListener('click', (e) => {
     let filterID = Date.now(),
-        filterValue = parseFloat(allPassValueBox.value);
-    currentFilter.addAllPassFilter({id: filterID, value: filterValue});
-    sendRequest();
+        filterValue = allPassValueBox.value;
+
+    createAllPassFilterDiv(filterID, filterValue);
+    setEventListenersOnAllPassList();
+
+    // @TODO: add the filter to the current filter OB
+    // currentFilter.addAllPassFilter(filterID, filterValue);
+    // sendRequest();
 });
 
 removeAllPassBtn.addEventListener('click', (e) => {
-    currentFilter.removeAllPassFilter(filterID);
-    sendRequest();
+    let allPassFiltersList = document.querySelectorAll('.allpass');
+
+    allPassFiltersList.forEach(filter => {
+        if (filter.classList.contains('selected')) {
+            filter.remove();
+        }
+    });
+
+    // @TODO currentFilter.removeAllPassFilter(selectedAllPassFilter);
+    // sendRequest();
 });
 
 

@@ -40,28 +40,6 @@ class DrawingBoard {
         this.stage.draw();
     }
 
-    /**  ------------------------------------------ Getters ------------------------------------------ **/
-
-    get getZeroes() {
-        return this.zeroesShapes;
-    }
-
-    get getPoles() {
-        return this.polesShapes;
-    }
-
-    get getCircleRadius() {
-        return this.#circleRadius;
-    }
-
-    get getCircleCenterX() {
-        return this.#circleCenterX;
-    }
-
-    get getCircleCenterY() {
-        return this.#circleCenterY;
-    }
-
     /**  ------------------------------------------ Methods ------------------------------------------ **/
 
     createPole = (xPos = 200, yPos = 200) => {
@@ -95,5 +73,27 @@ class DrawingBoard {
     #createUnitCircle(xCenter, yCenter, radius) {
         let circle = drawCircle(xCenter, yCenter, radius, false, 'blue', 1);
         this.layer.add(circle);
+    }
+
+    /**  ------------------------------------------ Getters ------------------------------------------ **/
+
+    get getZeroes() {
+        return this.zeroesShapes;
+    }
+
+    get getPoles() {
+        return this.polesShapes;
+    }
+
+    get getCircleRadius() {
+        return this.#circleRadius;
+    }
+
+    get getCircleCenterX() {
+        return this.#circleCenterX;
+    }
+
+    get getCircleCenterY() {
+        return this.#circleCenterY;
     }
 }

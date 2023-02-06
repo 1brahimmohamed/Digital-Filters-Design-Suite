@@ -7,7 +7,13 @@
  *
  *******************************************************************************/
 
-const setUpRequestData = __ => {
+
+/**
+ * function to set up request data converting coordinates to normalized coordinates & shapes of unit circle to
+ * filter data
+ * @returns {void}
+ * **/
+const setUpRequestData = ()=> {
     let zeros = [], poles = [];
 
     for (let i = 0; i < unitCircleBoard.getZeroes.length; i++) {
@@ -41,6 +47,10 @@ const setUpRequestData = __ => {
     currentFilter.setPoles = poles;
 }
 
+/**
+ * function to send request to server
+ * @returns {void}
+ */
 const sendRequest = __ => {
 
     setUpRequestData();
@@ -52,7 +62,6 @@ const sendRequest = __ => {
             "Content-Type": "application/json"
         },
         dataType: 'json',
-        async: false,
         data: JSON.stringify({
             zeros: currentFilter.getZeros,
             poles: currentFilter.getPoles,
@@ -73,6 +82,24 @@ const sendRequest = __ => {
                 });
         }
     })
+}
 
+const testAllPassRequest = (allPassToBeTested) => {
+    $.ajax({
+        url: 'http://127.0.0.1:8000/suite/test-all-pass/',
+        type: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        dataType: 'json',
+        async: true,
+        data: JSON.stringify({
+          originalPhase: currentFilter.getPhaseResponse,
+          addedAllPass: allPassToBeTested
+        }),
+        success: function (response) {
+            console.log(response)
+        }
+    })
 }
 

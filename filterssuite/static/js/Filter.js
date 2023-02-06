@@ -54,6 +54,7 @@ class Filter{
         };
     }
 
+    /**  ------------------------------------------ Methods ------------------------------------------ **/
 
     exportFilterToCSV() {
         let csv = []        // create object 'csv' to store filter data
@@ -83,8 +84,6 @@ class Filter{
         return downloadedCSV
     }
 
-    /**  ------------------------------------------ Methods ------------------------------------------ **/
-
     addZero(zeroObj) {
         this.#zeros.push(zeroObj);
     };
@@ -97,7 +96,7 @@ class Filter{
         this.#allPassFilters.push(allPassFilterObj);
     };
 
-    removeAllPassFilters(filerID) {
+    removeAllPassFilter(filerID) {
         this.#allPassFilters.forEach((allPassFilter) => {
             if (allPassFilter.id === filerID) {
                 this.#allPassFilters.splice(this.#allPassFilters.indexOf(allPassFilter), 1);
