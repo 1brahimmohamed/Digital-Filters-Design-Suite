@@ -6,6 +6,7 @@ import json
 from .digital_filter import *
 
 
+digital_filter = None
 
 
 @csrf_protect
@@ -21,6 +22,8 @@ def filter_response(request):
     if request.method == 'POST':
         req = json.loads(request.body)
 
+        global digital_filter
+
         zeros = req['zeros']
         poles = req['poles']
         all_pass = req['allPass']
@@ -30,7 +33,6 @@ def filter_response(request):
         complex_allPass = []
 
         for z in zeros:
-            print(z)
             complex_zeros.append(complex(z['x'], z['y']))
         for p in poles:
             complex_poles.append(complex(p['x'], p['y']))
@@ -38,10 +40,10 @@ def filter_response(request):
             value = a['filterValue']
             complex_allPass.append(complex(value['re'], value['im']))
 
-        digital_filter_orig = DigitalFilter(complex_zeros, complex_poles)
+        digital_filter = DigitalFilter(complex_zeros, complex_poles)
         if len(all_pass) > 0:
-            digital_filter_orig.add_list_all_pass(complex_allPass)
-        normalized_freq, magnitude, phase = digital_filter_orig.response()
+            digital_filter.add_list_all_pass(complex_allPass)
+        normalized_freq, magnitude, phase = digital_filter.response()
 
         # plot in frontend normalized_freq (0.0 => pi) in x_axis, magnitude or phase in y_axis
         return JsonResponse(
@@ -57,6 +59,7 @@ def filter_response(request):
 @csrf_exempt
 def test_all_pass(request):
     if request.method == 'POST':
+
         req = json.loads(request.body)
 
         all_pass_value = req['value']
@@ -69,5 +72,24 @@ def test_all_pass(request):
             {
                 'normalizedFrequency': list(normalized_freq),
                 'allPassResponse': list(all_pass_phase)
+            }
+        )
+
+
+@csrf_protect
+@csrf_exempt
+def signal_filtering(request):
+    if request.method == 'POST':
+        global digital_filter
+
+        req = json.loads(request.body)
+
+        real_time_signal = req['signal']
+        filtered_signal = digital_filter.apply_filter(real_time_signal)
+
+        # plot in frontend normalized_freq (0.0 => pi) in x_axis, magnitude or phase in y_axis
+        return JsonResponse(
+            {
+                'filteredSignal': list(filtered_signal)[0]
             }
         )

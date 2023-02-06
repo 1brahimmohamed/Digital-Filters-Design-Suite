@@ -95,7 +95,7 @@ class DigitalFilter:
     def remove_all_poles(self):
         self.__poles= []
 
-    def remove_all_pass(self, a:complex):
+    def remove_all_pass(self, a: complex):
         """
         Remove one all-pass filter with coefficient a to the filter.
         """
