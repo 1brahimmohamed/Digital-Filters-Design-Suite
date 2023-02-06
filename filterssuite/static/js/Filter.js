@@ -93,6 +93,18 @@ class Filter{
         this.#poles.push(poleObj);
     };
 
+    addAllPassFilter(allPassFilterObj) {
+        this.#allPassFilters.push(allPassFilterObj);
+    };
+
+    removeAllPassFilters(filerID) {
+        this.#allPassFilters.forEach((allPassFilter) => {
+            if (allPassFilter.id === filerID) {
+                this.#allPassFilters.splice(this.#allPassFilters.indexOf(allPassFilter), 1);
+            }
+        })
+    }
+
     clearZeros() {
         this.#zeros = [];
     }

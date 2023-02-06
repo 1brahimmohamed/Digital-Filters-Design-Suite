@@ -7,22 +7,28 @@
  *
  *******************************************************************************/
 
-let boardWidth = 500,
-    boardHeight = 500;
+const boardWidth    = 500,
+      boardHeight   = 500;
 
 let drawZero = true;
 
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
-let currentFilter = new Filter();
-let unitCircleBoard = new DrawingBoard('container', boardWidth, boardHeight);
-let magnitudePlot = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)');
-let phasePlot = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)');
+let currentFilter   = new Filter(),
+    unitCircleBoard = new DrawingBoard('container', boardWidth, boardHeight),
+    magnitudePlot   = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)'),
+    phasePlot       = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)'),
+    realTimePlot    = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)');
 
 /**  -------------------------------------- HTML DOM Elements Declaration -------------------------------------- **/
 
-let downloadBtn = document.getElementById('download-btn');
-let uploadBtn = document.getElementById('upload-btn');
+let downloadBtn         = document.getElementById('download-btn'),
+    uploadBtn           = document.getElementById('upload-btn'),
+    addAllPassBtn       = document.getElementById('add-all-pass-btn'),
+    removeAllPassBtn    = document.getElementById('remove-all-pass-btn'),
+    allPassValueBox     = document.getElementById('all-pass-value');
+
+let mousePad = createMouseSignalPad();
 
 const mouseDownHandler = (e) => {
     let xCurr = unitCircleBoard.stage.getPointerPosition().x,
@@ -43,14 +49,15 @@ const mouseDownHandler = (e) => {
 }
 
 unitCircleBoard.stage.on('mouseup', mouseDownHandler);
-
+mousePad.on('mousemove', (e) => {
+    realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
+});
 
 downloadBtn.addEventListener('click', (e) => {
     let filterCSV = currentFilter.exportFilterToCSV();
     downloadBtn.href = 'data:text/csv;charset=utf-8,' + encodeURI(filterCSV);
     downloadBtn.download = 'filter.csv';
 });
-
 uploadBtn.addEventListener('change', (e) => {
     let file = e.target.files[0],
         fileReader = new FileReader();
@@ -67,13 +74,12 @@ uploadBtn.addEventListener('change', (e) => {
         parsedFile.map((d) => {
             let xNormal = d[keys[1]],
                 yNormal = d[keys[2]],
-                xActual =   xNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterX,
-                yActual = - yNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterY;
+                xActual = xNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterX,
+                yActual = -yNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterY;
 
             if (d[keys[0]] === 'z') {
                 unitCircleBoard.createZero(xActual, yActual);
-            }
-            else if (d[keys[0]] === 'p') {
+            } else if (d[keys[0]] === 'p') {
                 unitCircleBoard.createPole(xActual, yActual);
             }
         })
@@ -81,4 +87,19 @@ uploadBtn.addEventListener('change', (e) => {
         sendRequest();
     }
 });
+
+addAllPassBtn.addEventListener('click', (e) => {
+    let filterID = Date.now(),
+        filterValue = parseFloat(allPassValueBox.value);
+    currentFilter.addAllPassFilter({id: filterID, value: filterValue});
+    sendRequest();
+});
+
+removeAllPassBtn.addEventListener('click', (e) => {
+    currentFilter.removeAllPassFilter(filterID);
+    sendRequest();
+});
+
+
+
 

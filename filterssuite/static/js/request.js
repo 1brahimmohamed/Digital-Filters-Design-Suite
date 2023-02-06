@@ -46,11 +46,19 @@ const sendRequest = __ => {
     setUpRequestData();
 
     $.ajax({
-        url: 'http://127.0.0.1:8000/suite/get-filter-response/', type: 'POST', headers: {
+        url: 'http://127.0.0.1:8000/suite/get-filter-response/',
+        type: 'POST',
+        headers: {
             "Content-Type": "application/json"
-        }, dataType: 'json', async: false, data: JSON.stringify({
-            zeros: currentFilter.getZeros, poles: currentFilter.getPoles,
-        }), success: function (response) {
+        },
+        dataType: 'json',
+        async: false,
+        data: JSON.stringify({
+            zeros: currentFilter.getZeros,
+            poles: currentFilter.getPoles,
+            allPass: currentFilter.getAllPassFilters,
+        }),
+        success: function (response) {
 
             magnitudePlot.updatePlot(
                 {

@@ -52,6 +52,28 @@ const checkIfDrawing = (x_current, y_current, zerosArr, polesArr) => {
 }
 
 
+const createMouseSignalPad = __ => {
+    let stg = new Konva.Stage({
+        container: 'pad',
+        width: 400,
+        height: 200,
+    });
+    let layer = new Konva.Layer();
+
+    let background = new Konva.Rect({
+        x: 0,
+        y: 0,
+        width: 400,
+        height: 200,
+        cornerRadius: 10,
+        fill: 'DimGrey',
+    });
+    layer.add(background);
+    stg.add(layer);
+
+    return stg;
+}
+
 /**
  * Function to draw a circle on the canvas
  * @param circX

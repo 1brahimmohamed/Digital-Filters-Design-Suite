@@ -1,11 +1,12 @@
-class PlottedSignal {
-    constructor(divID, xData, yData, xLabel = 'frequency (Hz)', yLabel = 'magnitude (dB)') {
+class DynamicPlot {
+    #center
 
+    constructor(divID, xLabel = 'time (s)', yLabel = 'magnitude (dB)') {
+        this.#center = 0;
         this.divID = divID;
         this.data = [
             {
-                x: xData,
-                y: yData,
+                y: [0],
                 mode: "lines",
                 type: "scatter",
                 name: 'Signal'
@@ -20,17 +21,19 @@ class PlottedSignal {
 
         this.layout = {
             margin: {
-                t: 0},
+                t: 0
+            },
             xaxis: {
                 title: {
                     text: xLabel,
                 },
-                range: [0, 3],
+                range: [0, 50],
             },
             yaxis: {
                 title: {
                     text: yLabel,
                 },
+                range: [-100, 500]
             },
         };
 
@@ -46,17 +49,15 @@ class PlottedSignal {
         );
     }
 
-    updatePlot(data) {
-        Plotly.newPlot(
-            this.divID,
-            [{
-                x: data.x,
-                y: data.y,
-                mode: "lines",
-                type: "scatter",
-            }],
-            this.layout,
-            this.config,
-        );
+    updateDynamicPlot(data) {
+        Plotly.extendTraces(this.divID ,{ y:[[data]]}, [0]);
+        this.#center++;
+        if(this.#center > 50) {
+            Plotly.relayout(this.divID,{
+                xaxis: {
+                    range: [this.#center-50,this.#center+50]
+                }
+            });
+        }
     }
-    }
+}
