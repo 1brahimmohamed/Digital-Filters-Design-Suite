@@ -80,13 +80,20 @@ const sendRequest = __ => {
                         x: response.normalizedFrequency,
                         y: response.phaseResponse
                 });
+
+            originalPhasePlot.updatePlot(
+                {
+                    x: response.normalizedFrequency,
+                    y: response.phaseResponse
+                }
+            )
         }
     })
 }
 
-const testAllPassRequest = (allPassToBeTested) => {
+const getAllPassRequest = () => {
     $.ajax({
-        url: 'http://127.0.0.1:8000/suite/test-all-pass/',
+        url: 'http://127.0.0.1:8000/suite/get-allpass-response/',
         type: 'POST',
         headers: {
             "Content-Type": "application/json"
@@ -94,12 +101,34 @@ const testAllPassRequest = (allPassToBeTested) => {
         dataType: 'json',
         async: true,
         data: JSON.stringify({
-          originalPhase: currentFilter.getPhaseResponse,
-          addedAllPass: allPassToBeTested
+            value: math.complex(`${allPassValueBox.value}`)
         }),
         success: function (response) {
             console.log(response)
         }
     })
 }
+
+const filerSignalRequest = (currVal) =>{
+    $.ajax({
+        url: 'http://127.0.0.1:8000/suite/filter-signal/',
+        type: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        dataType: 'json',
+        async: true,
+        data: JSON.stringify({
+            signal: currVal
+        }),
+        success: function (response) {
+            let val = response.filteredSignal.slice(-1)
+            console.log(val)
+            realTimeFilteredPlot.updateDynamicPlot(parseInt(val))
+        }
+    })
+}
+
+
+
 
