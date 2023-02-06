@@ -13,6 +13,8 @@ const boardWidth    = 500,
 let drawZero = true;
 let selectedAllPassFilter = null;
 
+let realtimeSignal = []
+
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
 let currentFilter   = new Filter(),
@@ -20,6 +22,11 @@ let currentFilter   = new Filter(),
     magnitudePlot   = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)'),
     phasePlot       = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)'),
     realTimePlot    = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)');
+    realTimeFilteredPlot    = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)');
+
+
+let originalPhasePlot =  new PlottedSignal('plot-page-1', [0],[0], 'freq', 'phase'),
+    currentAllPassPlot =  new PlottedSignal('plot-page-2', [0],[0], 'freq', 'phase');
 
 /**  -------------------------------------- HTML DOM Elements Declaration -------------------------------------- **/
 
@@ -52,6 +59,11 @@ const mouseDownHandler = (e) => {
 unitCircleBoard.stage.on('mouseup', mouseDownHandler);
 mousePad.on('mousemove', (e) => {
     realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
+    realtimeSignal.push(mousePad.getPointerPosition().x)
+    if (realtimeSignal.length > 5)
+        realtimeSignal.shift()
+
+    filerSignalRequest(realtimeSignal)
 });
 
 downloadBtn.addEventListener('click', (e) => {
@@ -96,8 +108,11 @@ addAllPassBtn.addEventListener('click', (e) => {
     createAllPassFilterDiv(filterID, filterValue);
     setEventListenersOnAllPassList();
 
-    // @TODO: add the filter to the current filter OB
-    // currentFilter.addAllPassFilter(filterID, filterValue);
+    currentFilter.addAllPassFilter(
+        {
+            id: filterID,
+            filterValue: math.complex(`${filterValue}`)
+        });
     // sendRequest();
 });
 
@@ -109,8 +124,7 @@ removeAllPassBtn.addEventListener('click', (e) => {
             filter.remove();
         }
     });
-
-    // @TODO currentFilter.removeAllPassFilter(selectedAllPassFilter);
+    currentFilter.removeAllPassFilter(selectedAllPassFilter);
     // sendRequest();
 });
 

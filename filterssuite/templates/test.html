@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="eng">
 <head>
     <meta charset="utf-8" />
     <title>Konva Demo</title>
@@ -19,9 +19,7 @@
 <button id="poless">
     poles shape
 </button>
-<button id="zorar">
-    poles shape
-</button>
+
 <a id="download-btn">
     <button>Download</button>
 </a>
@@ -35,9 +33,10 @@
 </div>
 
 <div id="container2">
-    <div id="plot-1" style="width: 30%; display: inline-block"></div>
-    <div id="plot-2" style="width: 30%; display: inline-block"></div>
-    <div id="plot-3" style="width: 30%; display: inline-block"></div>
+    <div id="plot-1" style="width: 24%; display: inline-block"></div>
+    <div id="plot-2" style="width: 24%; display: inline-block"></div>
+    <div id="plot-3" style="width: 24%; display: inline-block"></div>
+    <div id="plot-4" style="width: 24%; display: inline-block"></div>
 </div>
 
 <div id="all-pass-filters" style="width: 350px; height: 500px; background-color: blue">
@@ -58,6 +57,16 @@
 <button id="remove-all-pass-btn">
     remove
 </button>
+<button id="zorar">
+    print allpass
+</button>
+
+<div>
+    <div id="plot-page-1" style="width: 30%; display: inline-block"></div>
+    <div id="plot-page-2" style="width: 30%; display: inline-block"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.1/math.js"></script>
 <script src="../static/js/helpersFunctions.js"></script>
 <script src="../static/js/DrawingBoard.js"></script>
 <script src="../static/js/PlottedSignal.js"></script>
@@ -77,7 +86,7 @@
         console.log(unitCircleBoard.getPoles)
     });
     document.getElementById('zorar').addEventListener('click', function () {
-        unitCircleBoard.layer.destroyChildren();
+        console.log(currentFilter.getAllPassFilters);
     });
 </script>
 </body>

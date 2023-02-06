@@ -90,6 +90,6 @@ def signal_filtering(request):
         # plot in frontend normalized_freq (0.0 => pi) in x_axis, magnitude or phase in y_axis
         return JsonResponse(
             {
-                'filteredSignal': list(filtered_signal)[0]
+                'filteredSignal': list(filtered_signal)
             }
         )

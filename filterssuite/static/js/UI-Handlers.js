@@ -21,7 +21,7 @@ const setEventListenersOnAllPassList = () => {
             });
 
             filterDiv.classList.add('selected');
-            selectedAllPassFilter = filterDiv.id;
+            selectedAllPassFilter = parseInt(filterDiv.id);
         });
 
     });
