@@ -104,6 +104,10 @@ class Filter{
         })
     }
 
+    clearAllPass(){
+        this.#allPassFilters = [];
+    }
+
     clearZeros() {
         this.#zeros = [];
     }

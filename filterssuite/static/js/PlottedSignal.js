@@ -25,7 +25,7 @@ class PlottedSignal {
                 title: {
                     text: xLabel,
                 },
-                range: [0, 3],
+                range: [0, 3.5],
             },
             yaxis: {
                 title: {
