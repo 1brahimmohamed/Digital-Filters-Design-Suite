@@ -8,6 +8,8 @@
  *******************************************************************************/
 
 
+let divMessage = document.getElementById('container');
+console.log(divMessage.offsetWidth, divMessage.offsetHeight);
 
 const boardWidth = 330,
     boardHeight = 330;
