@@ -34,17 +34,6 @@ navItemsUp.forEach(navItemUpper => {
 
 });
 
-// Lower Side Bar
-navItemsDown.forEach(navItemDown => {
-    navItemDown.addEventListener('click', () => {
-        navItemsDown.forEach(navItem => {
-            navItem.classList.remove('active');
-        });
-
-        navItemDown.classList.add('active');
-    });
-});
-
 // toggle drawn shape & modes
 document.addEventListener('click', (evt) => {
 
@@ -73,70 +62,9 @@ document.addEventListener('click', (evt) => {
 })
 
 //  disable/enable the canvas
-document.addEventListener('click', (evt) => {
-    if (evt.target.matches('.disable')){
-
-        // (canvas 1)
-        if (evt.target.id === 'disable1') {
-            uniCanvas1 = !uniCanvas1;                      // toggle the state
-            if (uniCanvas1) {                              // if the state is true
-                drawDisableImage(0);            // draw the-disable image
-                canvas1Status = canvasStates[2];
-            }
-            else {
-                deleteDisableImage(0);          // delete the disable image
-                if (check1.checked)                        // if the checkbox is checked
-                    canvas1Status = canvasStates[0];       // set the status to "Phase"
-                else
-                    canvas1Status = canvasStates[1];       // set the status to "Magnitude"
-            }
-        }
-
-        // (canvas 2)
-        else if (evt.target.id === 'disable2') {
-            uniCanvas2 = !uniCanvas2;                       // toggle the state
-            if (uniCanvas2) {
-                drawDisableImage(2);             // draw the-disable image
-                canvas2Status = canvasStates[2];            // set the status to "Disable"
-            }
-            else {
-                deleteDisableImage(2);            // delete the disable image
-                if (check2.checked)                         // if the checkbox is checked
-                    canvas2Status = canvasStates[1];        // set the status to "Magnitude"
-                else
-                    canvas2Status = canvasStates[0];        // set the status to "Phase"
-            }
-        }
-
-        sendRequest()
-    }
-})
 
 
 /**  ------------------------------------------------ Functions ------------------------------------------------ **/
-
-/**
- * Function to draw the-disable image on specific canvas
- * @param {number} layerNumber - the layer number to draw the image on
- * @return {void}
- **/
-const drawDisableImage = (layerNumber) => {
-    let newImage = new Image()
-    newImage.src = '../static/images/disable.png'
-    let img = drawImage(newImage)
-    layers[layerNumber].add(img)
-}
-
-
-/**
- * Function to erase the-disable image on specific canvas
- * @param {number} layerNumber - the layer number to draw the image on
- * @return {void}
- **/
-const deleteDisableImage = (layerNumber) => {
-    let layerImages = layers[layerNumber].find('Image')
-    layerImages[1].remove()
-}
 
 function openPage(pageName,elmnt,color) {
   var i, tabcontent, tablinks;

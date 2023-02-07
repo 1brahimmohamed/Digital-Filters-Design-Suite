@@ -26,7 +26,6 @@ class DrawingBoard {
             container: divId,
             width: width,
             height: height,
-            backgroundColor: 'red',
         });
 
         this.layer = new Konva.Layer();

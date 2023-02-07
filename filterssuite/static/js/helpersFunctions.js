@@ -55,22 +55,25 @@ const checkIfDrawing = (x_current, y_current, zerosArr, polesArr) => {
 
 /**
  * Function to create the realtime mouse signal pad
+ * @param {number} padWidth  - width of the pad
+ * @param {number} padHeight - height of the pad
+ * @param {string} padContainer - id of the container
  * @returns {Konva.Stage}
  */
-const createMouseSignalPad = __ => {
+const createMouseSignalPad = (padWidth, padHeight, padContainer) => {
     let stg = new Konva.Stage({
-        container: 'pad',
-        width: 400,
-        height: 200,
+        container:padContainer ,
+        width: padWidth,
+        height: padHeight,
     });
     let layer = new Konva.Layer();
 
     let background = new Konva.Rect({
         x: 0,
         y: 0,
-        width: 400,
-        height: 200,
-        cornerRadius: 10,
+        width:padWidth ,
+        height: padHeight,
+        cornerRadius: 20,
         fill: 'DimGrey',
     });
     layer.add(background);

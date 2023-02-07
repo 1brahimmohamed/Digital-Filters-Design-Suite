@@ -7,8 +7,13 @@
  *
  *******************************************************************************/
 
-const boardWidth    = 500,
-      boardHeight   = 500;
+
+
+const boardWidth = 330,
+    boardHeight = 330;
+
+const padWidth = 333,
+    padHeight = 205;
 
 let drawZero = true;
 let selectedAllPassFilter = null;
@@ -17,26 +22,26 @@ let realtimeSignal = []
 
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
-let currentFilter   = new Filter(),
+let currentFilter = new Filter(),
     unitCircleBoard = new DrawingBoard('container', boardWidth, boardHeight),
-    magnitudePlot   = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)'),
-    phasePlot       = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)'),
-    realTimePlot    = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)');
-    realTimeFilteredPlot    = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', [0, 50], [-100, 1000]);
+    magnitudePlot = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)'),
+    phasePlot = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)'),
+    realTimePlot = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)');
+realTimeFilteredPlot = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', [0, 50], [-100, 1000]);
 
 
-let originalPhasePlot =  new PlottedSignal('plot-page-1', [0],[0], 'freq', 'phase'),
-    currentAllPassPlot =  new PlottedSignal('plot-page-2', [0],[0], 'freq', 'phase');
+let originalPhasePlot = new PlottedSignal('plot-page-1', [0], [0], 'freq', 'phase'),
+    currentAllPassPlot = new PlottedSignal('plot-page-2', [0], [0], 'freq', 'phase');
 
 /**  -------------------------------------- HTML DOM Elements Declaration -------------------------------------- **/
 
-let downloadBtn         = document.getElementById('download-btn'),
-    uploadBtn           = document.getElementById('upload-btn'),
-    addAllPassBtn       = document.getElementById('add-all-pass-btn'),
-    removeAllPassBtn    = document.getElementById('remove-all-pass-btn'),
-    allPassValueBox     = document.getElementById('all-pass-value');
+let downloadBtn = document.getElementById('download-btn'),
+    uploadBtn = document.getElementById('upload-btn'),
+    addAllPassBtn = document.getElementById('add-all-pass-btn'),
+    removeAllPassBtn = document.getElementById('remove-all-pass-btn'),
+    allPassValueBox = document.getElementById('all-pass-value');
 
-let mousePad = createMouseSignalPad();
+let mousePad = createMouseSignalPad(padWidth, padHeight, 'pad');
 
 const mouseDownHandler = (e) => {
     let xCurr = unitCircleBoard.stage.getPointerPosition().x,
@@ -58,16 +63,18 @@ const mouseDownHandler = (e) => {
 let ct = 0;
 unitCircleBoard.stage.on('mouseup', mouseDownHandler);
 mousePad.on('mousemove', (e) => {
-    if (ct > 4) {
-        realtimeSignal.push(mousePad.getPointerPosition().x)
-        if (realtimeSignal.length > 20) {
-            realtimeSignal.shift();
+    if (currentFilter.getZeros.length !== 0 || currentFilter.getPoles.length !== 0) {
+        if (ct > 4) {
+            realtimeSignal.push(mousePad.getPointerPosition().x)
+            if (realtimeSignal.length > 20) {
+                realtimeSignal.shift();
+            }
+            realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
+            filerSignalRequest(realtimeSignal)
+            ct = 0;
         }
-        realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
-        filerSignalRequest(realtimeSignal)
-        ct = 0;
+        ct++;
     }
-    ct++;
 });
 
 downloadBtn.addEventListener('click', (e) => {
@@ -76,32 +83,35 @@ downloadBtn.addEventListener('click', (e) => {
     downloadBtn.download = 'filter.csv';
 });
 uploadBtn.addEventListener('change', (e) => {
-    let file = e.target.files[0],
-        fileReader = new FileReader();
+    console.log(e.target.files)
+    if (e.target.files.length !== 0) {
+        let file = e.target.files[0],
+            fileReader = new FileReader();
 
-    fileReader.readAsText(file)
-    fileReader.onload = function (ev) {
-        let csv = ev.target.result,
-            parsedFile = d3.csvParse(csv)
+        fileReader.readAsText(file)
+        fileReader.onload = function (ev) {
+            let csv = ev.target.result,
+                parsedFile = d3.csvParse(csv)
 
-        let keys = Object.keys(parsedFile[0])
+            let keys = Object.keys(parsedFile[0])
 
-        unitCircleBoard.clearBoard();
+            unitCircleBoard.clearBoard();
 
-        parsedFile.map((d) => {
-            let xNormal = d[keys[1]],
-                yNormal = d[keys[2]],
-                xActual = xNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterX,
-                yActual = -yNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterY;
+            parsedFile.map((d) => {
+                let xNormal = d[keys[1]],
+                    yNormal = d[keys[2]],
+                    xActual = xNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterX,
+                    yActual = -yNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterY;
 
-            if (d[keys[0]] === 'z') {
-                unitCircleBoard.createZero(xActual, yActual);
-            } else if (d[keys[0]] === 'p') {
-                unitCircleBoard.createPole(xActual, yActual);
-            }
-        })
+                if (d[keys[0]] === 'z') {
+                    unitCircleBoard.createZero(xActual, yActual);
+                } else if (d[keys[0]] === 'p') {
+                    unitCircleBoard.createPole(xActual, yActual);
+                }
+            })
 
-        sendRequest();
+            sendRequest();
+        }
     }
 });
 

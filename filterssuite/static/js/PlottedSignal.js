@@ -15,7 +15,7 @@ class PlottedSignal {
         this.config = {
             responsive: true,
             editable: false,
-            displaylogo: false
+            displaylogo: false,
         };
 
         this.layout = {
