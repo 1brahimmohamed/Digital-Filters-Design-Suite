@@ -104,6 +104,9 @@ const getAllPassRequest = () => {
             value: math.complex(`${allPassValueBox.value}`)
         }),
         success: function (response) {
+            for (let x = 0; x < response.magnitudeResponse.length; x++) {
+                response.magnitudeResponse[x] = response.magnitudeResponse[x].toFixed(4)
+            }
             magnitudePlot.updatePlot({x: response.normalizedFrequency , y: response.magnitudeResponse})
             phasePlot.updatePlot({x: response.normalizedFrequency , y: response.allPassResponse})
         }

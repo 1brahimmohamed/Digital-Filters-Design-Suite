@@ -58,8 +58,11 @@ const mouseDownHandler = (e) => {
 let ct = 0;
 unitCircleBoard.stage.on('mouseup', mouseDownHandler);
 mousePad.on('mousemove', (e) => {
-    if (ct > 6) {
+    if (ct > 4) {
         realtimeSignal.push(mousePad.getPointerPosition().x)
+        if (realtimeSignal.length > 20) {
+            realtimeSignal.shift();
+        }
         realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
         filerSignalRequest(realtimeSignal)
         ct = 0;

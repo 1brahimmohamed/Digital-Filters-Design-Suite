@@ -76,7 +76,7 @@ class DigitalFilter:
         print(a)
         self.__all_pass.append(a)
         self.__poles.append(a)
-        self.__zeros.append(1 / (a))
+        self.__zeros.append(1 / np.conj(a))
 
     def add_list_all_pass(self, a_list: list):
         """
