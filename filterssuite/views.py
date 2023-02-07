@@ -63,14 +63,15 @@ def test_all_pass(request):
         req = json.loads(request.body)
 
         all_pass_value = req['value']
-        all_pass_filter = DigitalFilter(complex(all_pass_value['re'], all_pass_value['im']))
-        all_pass_filter.add_all_pass()
-        normalized_freq, _, all_pass_phase = all_pass_filter.response()
+        all_pass_filter = DigitalFilter([], [])
+        all_pass_filter.add_all_pass(complex(all_pass_value['re'], all_pass_value['im']))
+        normalized_freq, magnitude_response, all_pass_phase = all_pass_filter.response()
 
         # plot in frontend normalized_freq (0.0 => pi) in x_axis, magnitude or phase in y_axis
         return JsonResponse(
             {
                 'normalizedFrequency': list(normalized_freq),
+                'magnitudeResponse': list(magnitude_response),
                 'allPassResponse': list(all_pass_phase)
             }
         )

@@ -55,6 +55,7 @@ class DigitalFilter:
         """
 
         print(self.__zeros, self.__poles)
+
         if w is None:
             w, response = signal.freqz_zpk(self.__zeros, self.__poles, self.__gain)
             # `w` is the x_axis from 0 hz to fmax hz (default value normalized from 0 to pi)
@@ -71,9 +72,11 @@ class DigitalFilter:
         """
         Add one all-pass filter with coefficient a to the filter.
         """
+
+        print(a)
         self.__all_pass.append(a)
         self.__poles.append(a)
-        self.__zeros.append(1 / np.conj(a))
+        self.__zeros.append(1 / (a))
 
     def add_list_all_pass(self, a_list: list):
         """
@@ -117,6 +120,5 @@ class DigitalFilter:
     def apply_filter(self, value):
         numerator, denominator = signal.zpk2tf(self.__zeros,self.__poles, self.__gain)
         filtered_signal = np.real(signal.lfilter(numerator, denominator, value))
-        print(filtered_signal)
         return filtered_signal
 

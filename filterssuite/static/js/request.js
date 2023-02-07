@@ -104,7 +104,8 @@ const getAllPassRequest = () => {
             value: math.complex(`${allPassValueBox.value}`)
         }),
         success: function (response) {
-            console.log(response)
+            magnitudePlot.updatePlot({x: response.normalizedFrequency , y: response.magnitudeResponse})
+            phasePlot.updatePlot({x: response.normalizedFrequency , y: response.allPassResponse})
         }
     })
 }
