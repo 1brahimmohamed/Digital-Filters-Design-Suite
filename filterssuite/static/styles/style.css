@@ -135,8 +135,8 @@ html{
 
 #menu2{
   grid-area: menu2;
-  margin-top: -80px;
-
+  margin-top: -200px;
+  margin-left: 10px;
 }
 
 #menu1 nav .nav-item {
@@ -211,6 +211,7 @@ html{
 .icon-bar a {
   float: left;
   width: 50%;
+  align-self: center;
   text-align: center;
   padding: 6px 0;
   transition: all 0.3s ease;
@@ -230,6 +231,10 @@ html{
 #menu1{
   grid-area: menu1;
   margin-top: 2px;
+}
+
+#signal a{
+ width: 100%;
 }
 
 /*** Boxes ***/
