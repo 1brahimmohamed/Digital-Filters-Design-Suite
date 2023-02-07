@@ -25,7 +25,7 @@
     <!--   Navbar     -->
 <div class="navbar">
 <button class="tab-link" onclick="openPage('Home', this, 'black')" id="design defaultOpen">Design Filter</button>
-<button class="tab-link" onclick="openPage('News', this, 'grey')" id="filter" >All-pass Filter</button>
+<button class="tab-link" onclick="openPage('all-pass', this, 'black')" id="filter" >All-pass Filter</button>
 </div>
 
 <div id="Home" class="tab-content">
@@ -103,8 +103,63 @@
 </div>
 
 <div id="all-pass" class="tab-content">
-</div>
+    <!--   Application Body     -->
+   <div class="main-container2">
+           <div class="container-2" id="catalogue">
+               <div class="vertical-menu" id="cata">
+                   <a href="#" class="active">Catalogue</a>
+                   <a href="#">filter 1</a>
+                   <a href="#">filter 2</a>
+                   <a href="#">filter 3</a>
+                   <a href="#">filter 4</a>
+                   <a href="#">filter 5</a>
+                   <a href="#">filter 6</a>
+                   <a href="#">filter 7</a>
+                   <a href="#">filter 8</a>
+                   <a href="#">filter 9</a>
+                   <a href="#">filter 10</a>
+               </div>
+           </div>
 
+               <div class="container-2" id="graphs2">
+                   <div class="content-2" id="content7">
+                       <div class="canvas" id="konva-container-7">  </div>
+                   </div>
+                   <!--         -->
+                   <div class="content-2" id="content8">
+                       <div class="canvas" id="konva-container-8"></div>
+                   </div>
+               </div>
+     
+               <div class="container-2" id="addfilter">
+                   <div class ="content-2" id="addfil">
+                       <div id="all-pass-filters">
+                           <div id="121" class="allpass">
+                               Hima
+                               Hima
+                           </div>
+                       
+                           <div id="122" class="allpass"> 
+                               Hoda
+                               Hoda
+                           </div>
+                       </div>
+                       <input id="all-pass-value" type="text">
+                       <button class="btn" id="add-all-pass-btn">
+                           Add filter
+                       </button>
+                       <button  class="btn" id="remove-all-pass-btn">
+                           Remove
+                       </button>
+                       <button class="btn" id="zorar">
+                           Print allpass
+                       </button>
+
+                   </div>
+               </div>
+               
+           </div>
+       </div>
 
 </body>
 <script type="text/javascript" src="../static/js/layout.js"></script>
