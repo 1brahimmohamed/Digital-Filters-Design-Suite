@@ -122,9 +122,8 @@ const filerSignalRequest = (currVal) =>{
             signal: currVal
         }),
         success: function (response) {
-            let val = response.filteredSignal.slice(-1)
-            console.log(val)
-            realTimeFilteredPlot.updateDynamicPlot(parseInt(val))
+            let val = response.filteredSignal.splice(-1)
+            realTimeFilteredPlot.updateDynamicPlot(parseFloat(val))
         }
     })
 }

@@ -53,12 +53,15 @@ class DigitalFilter:
         If w is not given, compute the response at a range of frequencies.
         Returns a tuple of w (frequency), magnitude, and phase.
         """
+
+        print(self.__zeros, self.__poles)
         if w is None:
             w, response = signal.freqz_zpk(self.__zeros, self.__poles, self.__gain)
             # `w` is the x_axis from 0 hz to fmax hz (default value normalized from 0 to pi)
             # `response` is the complex output of z_transform where we can get the magnitude & phase
         else:
             response = signal.zpk_eval_response(self.__zeros, self.__poles, self.__gain, w)
+
         magnitude = 20 * np.log10(np.abs(response))
         # convert from hz into decibels
         phase = np.unwrap(np.angle(response))   # `np.unwrap` to remove phase discontinuities
@@ -111,7 +114,9 @@ class DigitalFilter:
         self.__poles = self.__poles[0:len(self.__poles) - len(self.__all_pass)]
         self.__all_pass = []
 
-    def apply_filter(self, values: list) -> []:
+    def apply_filter(self, value):
         numerator, denominator = signal.zpk2tf(self.__zeros,self.__poles, self.__gain)
-        filtered_signal = np.real(signal.lfilter(numerator, denominator, values))
+        filtered_signal = np.real(signal.lfilter(numerator, denominator, value))
+        print(filtered_signal)
         return filtered_signal
+

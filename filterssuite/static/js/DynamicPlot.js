@@ -1,7 +1,7 @@
 class DynamicPlot {
     #center
 
-    constructor(divID, xLabel = 'time (s)', yLabel = 'magnitude (dB)') {
+    constructor(divID, xLabel = 'time (s)', yLabel = 'magnitude (dB)', xrange = [0, 50], yrange = [-100, 500]) {
         this.#center = 0;
         this.divID = divID;
         this.data = [
@@ -27,13 +27,13 @@ class DynamicPlot {
                 title: {
                     text: xLabel,
                 },
-                range: [0, 50],
+                range: xrange,
             },
             yaxis: {
                 title: {
                     text: yLabel,
                 },
-                range: [-100, 500]
+                range: yrange,
             },
         };
 

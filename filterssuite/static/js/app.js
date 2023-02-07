@@ -22,7 +22,7 @@ let currentFilter   = new Filter(),
     magnitudePlot   = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)'),
     phasePlot       = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)'),
     realTimePlot    = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)');
-    realTimeFilteredPlot    = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)');
+    realTimeFilteredPlot    = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', [0, 50], [-100, 1000]);
 
 
 let originalPhasePlot =  new PlottedSignal('plot-page-1', [0],[0], 'freq', 'phase'),
@@ -55,15 +55,16 @@ const mouseDownHandler = (e) => {
 
     sendRequest();
 }
-
+let ct = 0;
 unitCircleBoard.stage.on('mouseup', mouseDownHandler);
 mousePad.on('mousemove', (e) => {
-    realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
-    realtimeSignal.push(mousePad.getPointerPosition().x)
-    if (realtimeSignal.length > 5)
-        realtimeSignal.shift()
-
-    filerSignalRequest(realtimeSignal)
+    if (ct > 6) {
+        realtimeSignal.push(mousePad.getPointerPosition().x)
+        realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
+        filerSignalRequest(realtimeSignal)
+        ct = 0;
+    }
+    ct++;
 });
 
 downloadBtn.addEventListener('click', (e) => {
