@@ -99,22 +99,61 @@
 
 </div>
 
+
+
+
 <div id="all-pass" class="tab-content">
     <!--   Application Body     -->
    <div class="main-container2">
            <div class="container-2" id="catalogue">
                <div class="vertical-menu" id="cata">
-                   <a href="#" class="active">Catalogue</a>
-                   <a href="#">filter 1</a>
-                   <a href="#">filter 2</a>
-                   <a href="#">filter 3</a>
-                   <a href="#">filter 4</a>
-                   <a href="#">filter 5</a>
-                   <a href="#">filter 6</a>
-                   <a href="#">filter 7</a>
-                   <a href="#">filter 8</a>
-                   <a href="#">filter 9</a>
-                   <a href="#">filter 10</a>
+                <button class="left" onclick="leftScroll()">
+                    <i class="fas fa-angle-double-left"></i>
+                  </button>
+                  <div class="scroll-images">
+                    <div class="child" id="1" >
+                      <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                    </div>
+                    <div class="child" id="2">
+                      <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                    </div>
+                    <div class="child" id="3">
+                      <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                    </div>
+                    <div class="child">
+                      <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                    </div>
+                    <div class="child">
+                      <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                    </div>
+                    <div class="child">
+                      <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                    </div>
+                    <div class="child">
+                      <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                      </div>
+                      <div class="child">
+                          <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                      </div>
+                      <div class="child">
+                          <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                      </div>
+                      <div class="child">
+                          <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                      </div>
+                      <div class="child">
+                          <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                      </div>
+                      <div class="child">
+                          <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                      </div>
+                      <div class="child">
+                          <a href="#"><img class="child-img" src="..static/images/img.jpg" alt="image" /></a>
+                      </div>
+                  </div>
+                  <button class="right" onclick="rightScroll()">
+                    <i class="fas fa-angle-double-right"></i>
+                  </button>
                </div>
            </div>
 
@@ -142,13 +181,13 @@
                            </div>
                        </div>
                        <input id="all-pass-value" type="text">
-                       <button class="btn" id="add-all-pass-btn">
+                       <button id="btn2" id="add-all-pass-btn">
                            Add filter
                        </button>
-                       <button  class="btn" id="remove-all-pass-btn">
+                       <button  id="btn2" id="remove-all-pass-btn">
                            Remove
                        </button>
-                       <button class="btn" id="zorar">
+                       <button id="btn2" id="zorar">
                            Print allpass
                        </button>
 
@@ -158,6 +197,30 @@
            </div>
        </div>
 
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.1/math.js"></script>
+       <script src="../static/js/helpersFunctions.js"></script>
+       <script src="../static/js/DrawingBoard.js"></script>
+       <script src="../static/js/PlottedSignal.js"></script>
+       <script src="../static/js/DynamicPlot.js"></script>
+       <script src="../static/js/Filter.js"></script>
+       <script src="../static/js/request.js"></script>
+       <script src="../static/js/UI-Handlers.js"></script>
+       <script src="../static/js/app.js"></script>
+       <script>
+           document.getElementById('toggle').addEventListener('click', function () {
+               drawZero = !drawZero;
+           });
+           document.getElementById('zeross').addEventListener('click', function () {
+               console.log(unitCircleBoard.getZeroes)
+           });
+           document.getElementById('poless').addEventListener('click', function () {
+               console.log(unitCircleBoard.getPoles)
+           });
+           document.getElementById('zorar').addEventListener('click', function () {
+               getAllPassRequest();
+           });
+       </script>
 </body>
+<script src="..static/js/scroll.js"></script>
 <script type="text/javascript" src="../static/js/layout.js"></script>
 </html>

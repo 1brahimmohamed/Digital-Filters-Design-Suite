@@ -370,32 +370,71 @@ html{
 
 #cata{
   grid-area: cata;
-  margin-top: 100px;
-}
-.vertical-menu {
-  width: 300px;
-  height: 400px;
-  align-items: center;
-  overflow-y: auto; 
-  border-radius: var(--main-radius);
+  width: 200px;
+  height: 150px;
+  margin-top: 80px; 
+  transform: rotate(90deg);
 }
 
-.vertical-menu a {
- 
-  background-color: #eee;
-  color: black;
-  display: block;
-  padding: 12px;
-  text-decoration: none;
+.left {
+  position: absolute;
+  left: -25px;
+  bottom: 42%;
+  transform: translateY(-50%);
 }
 
-.vertical-menu a:hover {
-  background-color: #ccc;
+.right {
+  position: absolute;
+  right: -321px;
+  top: 49%;
+  transform: translateY(-50%);
 }
 
-.vertical-menu a.active {
-  background-color: #04AA6D;
-  color: white;
+.scroll-images {
+  width: 500px;
+  height: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.child img {
+  width: 100px;
+  height: 70%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.child :hover{
+  transform:scale(1.5);
+}
+.scroll-images::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  border-radius: 3px;
+  background-color: #ffffff;
+}
+
+.scroll-images::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 3px;
+}
+
+.child {
+  min-width: 120px;
+  height: 100px;
+  margin: 22px -10px;
+  overflow: hidden;
+  transform: rotate(-90deg);
+}
+
+.right, .left {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 /*** Boxes ***/
@@ -464,8 +503,9 @@ html{
   border: 3px  rgb(166, 166, 166) solid;
 }
 
-.btn{
+#btn2{
   border: 3px  rgb(166, 166, 166) solid;
+  background-color: #ccc;
   width: 120px;
   height: 40px;
   margin-bottom:10px ;
@@ -473,9 +513,13 @@ html{
 
 }
 
-.btn:hover{
-  background-color: #fff;
-  border: 3px  rgb(166, 166, 166) solid;
+#btn2:hover{
+  background-color: white;
+}
+
+#btn2:active {
+  box-shadow: 0 2px #666;
+  transform: translateY(2px);
 }
 
 .canvas{
