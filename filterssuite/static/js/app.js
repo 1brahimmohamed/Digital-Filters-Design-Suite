@@ -33,8 +33,8 @@ let importedSignal = {
 let currentFilter = new Filter(),
     unitCircleBoard = new DrawingBoard('container', boardWidth, boardHeight),
     magnitudePlot = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)', '#3f98ce'),
-    phasePlot = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
-    realTimePlot = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)'),
+    phasePlot = new PlottedSignal('plot-3', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
+    realTimePlot = new DynamicPlot('plot-2', 'time (s)', 'magnitude (dB)'),
     realTimeFilteredPlot = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', '#089841', [0, 50], [-100, 1000]);
 
 
@@ -178,13 +178,13 @@ importSignalBtn.addEventListener('change', (e) => {
     }
 });
 
-document.getElementById('zorar').addEventListener('click', (e) => {
-    clearInterval(realtimeSignalInterval)
-});
-
-document.getElementById('zorar1').addEventListener('click', (e) => {
-    startInterval()
-});
+// document.getElementById('zorar').addEventListener('click', (e) => {
+//     clearInterval(realtimeSignalInterval)
+// });
+//
+// document.getElementById('zorar1').addEventListener('click', (e) => {
+//     startInterval()
+// });
 
 
 const startInterval = () => {
@@ -194,8 +194,6 @@ const startInterval = () => {
             ImportedRealtimeSignal.shift();
         }
 
-        console.log(ImportedRealtimeSignal)
-
         if (i < importedSignal.y.length) {
             realTimePlot.updateDynamicPlot(importedSignal.y[i]);
             filerSignalRequest(ImportedRealtimeSignal)
@@ -203,7 +201,7 @@ const startInterval = () => {
         } else {
             clearInterval(realtimeSignalInterval)
         }
-    }, 50);
+    }, 10);
 }
 
 
