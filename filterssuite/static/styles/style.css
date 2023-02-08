@@ -294,6 +294,8 @@ html{
     object-fit: contain;
     align-self: center;
     border-radius: var(--main-radius);
+    overflow: hidden
+
 }
 
 

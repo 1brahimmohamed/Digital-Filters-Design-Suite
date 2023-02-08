@@ -44,7 +44,8 @@
                 </div>
                 <div class="icon-bar" id="signal">
                     <p>Signal</p>
-                    <a href="#"><i class='nevo bx bx-upload'></i></a>
+                    <input type="file" style="display: none" id="import-signal-btn">
+                    <a href="#" onclick="document.getElementById('import-signal-btn').click()"><i class='nevo bx bx-upload'></i></a>
                 </div>
             </div>
             <!--   zeros poles menu     -->
@@ -53,11 +54,11 @@
                     <div class="toggle">
                     </div>
                     <ul>
-                        <li class="nav-item active navi">
-                            <i class='nevo bx bx-x'></i>
+                        <li class="nav-item navi active">
+                            <i class='nevo bx bx-radio-circle'></i>
                         </li>
                         <li class="nav-item navi">
-                            <i class='nevo bx bx-radio-circle'></i>
+                            <i class='nevo bx bx-x'></i>
                         </li>
 
                     </ul>
@@ -80,7 +81,7 @@
 
             <!--         -->
             <div class="content" id="content3">
-                <div class="canvas" id="plot-1"></div>
+                <div class="canvas" id="plot-1" ></div>
             </div>
 
             <!--         -->
@@ -98,6 +99,12 @@
                 <div class="canvas" id="plot-4"></div>
             </div>
         </div>
+        <button id="zorar">
+            clivl
+        </button>
+        <button id="zorar1">
+            clivl
+        </button>
     </div>
 
 </div>
@@ -171,27 +178,28 @@
                 <div id="all-pass-filters">
                     <div class="allpass" id="121">
                         Hima
-                        Hima
                     </div>
 
                     <div class="allpass" id="122">
                         Hoda
-                        Hoda
                     </div>
                 </div>
-                <input id="all-pass-value" type="text">
-                <button id="add-all-pass-btn" id="add-all-pass-btn">
+                <input id="all-pass-value"
+                       type="text"
+                       pattern="[+-]?(((\d+.\d|\d.\d+|\d+)[+-])?((\d+.\d|\d.\d+|\d+)j|j(\d+.\d|\d.\d+|\d+)|j)|(\d+.\d|\d.\d+|\d+)?e^(([+-]?|[+-]?()((\d+.\d|\d.\d+|\d+)j|j(\d+.\d|\d.\d+|\d+)|j)))|[+-]?([0-9]*[.])?[0-9]+">
+                <button id="add-all-pass-btn">
                     Add filter
                 </button>
-                <button id="remove-all-pass-btn" id="remove-all-pass-btn">
+                <button id="remove-all-pass-btn">
                     Remove
                 </button>
                 <button id="clear-all-pass">
                     Clear All All-Pass Filters
                 </button>
-
             </div>
         </div>
+
+
 
     </div>
 </div>

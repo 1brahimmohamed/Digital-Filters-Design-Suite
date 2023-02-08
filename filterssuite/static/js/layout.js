@@ -42,22 +42,10 @@ document.addEventListener('click', (evt) => {
 
         // ------------- Shape Selection ------------- //
 
-        if (evt.target.classList.contains('bx-circle'))
-            circleDraw = true;
-        else if (evt.target.classList.contains('bx-rectangle'))
-            circleDraw = false;
-
-        // ------------- Mode Selection ------------- //
-
-        if (evt.target.classList.contains('bx-merge'))
-            mode = modes[0]
-        else if (evt.target.classList.contains('bx-intersect'))
-            mode = modes[1]
-        else if (evt.target.classList.contains('bx-minus-front'))
-            mode = modes[2]
-
-        sendRequest()
-
+        if (evt.target.classList.contains('bx-radio-circle'))
+            drawZero = true;
+        else if (evt.target.classList.contains('bx-x'))
+            drawZero = false;
     }
 })
 

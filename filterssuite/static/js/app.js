@@ -8,40 +8,47 @@
  *******************************************************************************/
 
 
-let divMessage = document.getElementById('container');
-console.log(divMessage.offsetWidth, divMessage.offsetHeight);
+let circleDiv = document.getElementById('container'),
+    padDiv = document.getElementById('pad');
 
-const boardWidth = 330,
-    boardHeight = 330;
+const boardWidth = circleDiv.offsetWidth,
+    boardHeight = circleDiv.offsetHeight;
 
-const padWidth = 333,
-    padHeight = 205;
+const padWidth = padDiv.offsetWidth,
+    padHeight = padDiv.offsetHeight;
 
 let drawZero = true;
 let selectedAllPassFilter = null;
 
-let realtimeSignal = []
+let mouseRealtimeSignal = [],
+    ImportedRealtimeSignal = [];
+
+let importedSignal = {
+    x: [],
+    y: []
+}
 
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
 let currentFilter = new Filter(),
     unitCircleBoard = new DrawingBoard('container', boardWidth, boardHeight),
-    magnitudePlot = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)'),
-    phasePlot = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)'),
-    realTimePlot = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)');
-realTimeFilteredPlot = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', [0, 50], [-100, 1000]);
+    magnitudePlot = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)', '#3f98ce'),
+    phasePlot = new PlottedSignal('plot-2', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
+    realTimePlot = new DynamicPlot('plot-3', 'time (s)', 'magnitude (dB)'),
+    realTimeFilteredPlot = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', '#089841', [0, 50], [-100, 1000]);
 
 
-let originalPhasePlot = new PlottedSignal('plot-page-1', [0], [0], 'freq', 'phase'),
+let originalPhasePlot = new PlottedSignal('plot-page-1', [0], [0], 'freq', 'phase', '#f64200'),
     currentAllPassPlot = new PlottedSignal('plot-page-2', [0], [0], 'freq', 'phase');
 
 /**  -------------------------------------- HTML DOM Elements Declaration -------------------------------------- **/
 
 let downloadBtn = document.getElementById('download-btn'),
-    uploadBtn = document.getElementById('upload-btn'),
+    uploadFilterBtn = document.getElementById('upload-btn'),
     addAllPassBtn = document.getElementById('add-all-pass-btn'),
     removeAllPassBtn = document.getElementById('remove-all-pass-btn'),
-    allPassValueBox = document.getElementById('all-pass-value');
+    allPassValueBox = document.getElementById('all-pass-value'),
+    importSignalBtn = document.getElementById('import-signal-btn');
 
 let mousePad = createMouseSignalPad(padWidth, padHeight, 'pad');
 
@@ -67,12 +74,12 @@ unitCircleBoard.stage.on('mouseup', mouseDownHandler);
 mousePad.on('mousemove', (e) => {
     if (currentFilter.getZeros.length !== 0 || currentFilter.getPoles.length !== 0) {
         if (ct > 4) {
-            realtimeSignal.push(mousePad.getPointerPosition().x)
-            if (realtimeSignal.length > 20) {
-                realtimeSignal.shift();
+            mouseRealtimeSignal.push(mousePad.getPointerPosition().x)
+            if (mouseRealtimeSignal.length > 20) {
+                mouseRealtimeSignal.shift();
             }
             realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
-            filerSignalRequest(realtimeSignal)
+            filerSignalRequest(mouseRealtimeSignal)
             ct = 0;
         }
         ct++;
@@ -84,8 +91,8 @@ downloadBtn.addEventListener('click', (e) => {
     downloadBtn.href = 'data:text/csv;charset=utf-8,' + encodeURI(filterCSV);
     downloadBtn.download = 'filter.csv';
 });
-uploadBtn.addEventListener('change', (e) => {
-    console.log(e.target.files)
+
+uploadFilterBtn.addEventListener('change', (e) => {
     if (e.target.files.length !== 0) {
         let file = e.target.files[0],
             fileReader = new FileReader();
@@ -143,6 +150,61 @@ removeAllPassBtn.addEventListener('click', (e) => {
     currentFilter.removeAllPassFilter(selectedAllPassFilter);
     // sendRequest();
 });
+let i = 0;
+
+let realtimeSignalInterval;
+importSignalBtn.addEventListener('change', (e) => {
+    if (e.target.files.length !== 0) {
+        importedSignal = {x: [], y: []};
+        ImportedRealtimeSignal = [];
+
+        let file = e.target.files[0],
+            fileReader = new FileReader();
+
+        fileReader.readAsText(file)
+        fileReader.onload = function (ev) {
+            let csv = ev.target.result,
+                parsedFile = d3.csvParse(csv)
+
+            let keys = Object.keys(parsedFile[0])
+
+            parsedFile.map((d) => {
+                importedSignal.x.push(d[keys[0]]);
+                importedSignal.y.push(d[keys[1]]);
+            })
+        }
+
+        startInterval()
+    }
+});
+
+document.getElementById('zorar').addEventListener('click', (e) => {
+    clearInterval(realtimeSignalInterval)
+});
+
+document.getElementById('zorar1').addEventListener('click', (e) => {
+    startInterval()
+});
+
+
+const startInterval = () => {
+    realtimeSignalInterval = setInterval(() => {
+        ImportedRealtimeSignal.push(parseFloat(importedSignal.y[i]))
+        if (ImportedRealtimeSignal.length > 20) {
+            ImportedRealtimeSignal.shift();
+        }
+
+        console.log(ImportedRealtimeSignal)
+
+        if (i < importedSignal.y.length) {
+            realTimePlot.updateDynamicPlot(importedSignal.y[i]);
+            filerSignalRequest(ImportedRealtimeSignal)
+            i++;
+        } else {
+            clearInterval(realtimeSignalInterval)
+        }
+    }, 50);
+}
 
 
 

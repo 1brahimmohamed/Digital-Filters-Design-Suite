@@ -1,7 +1,9 @@
 class PlottedSignal {
-    constructor(divID, xData, yData, xLabel = 'frequency (Hz)', yLabel = 'magnitude (dB)') {
+    constructor(divID, xData, yData, xLabel = 'frequency (Hz)', yLabel = 'magnitude (dB)', color = 'rgb(0, 0, 0)') {
 
         this.divID = divID;
+        this.color = color;
+
         this.data = [
             {
                 x: xData,
@@ -16,11 +18,16 @@ class PlottedSignal {
             responsive: true,
             editable: false,
             displaylogo: false,
+            displayModeBar: false,
         };
 
         this.layout = {
             margin: {
-                t: 0},
+                t: 20,
+                r: 1,
+                b: 40,
+                l: 50,
+            },
             xaxis: {
                 title: {
                     text: xLabel,
@@ -54,6 +61,9 @@ class PlottedSignal {
                 y: data.y,
                 mode: "lines",
                 type: "scatter",
+                line: {
+                    color: this.color,
+                }
             }],
             this.layout,
             this.config,

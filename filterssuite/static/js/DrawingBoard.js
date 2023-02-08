@@ -7,6 +7,8 @@
  *
  *******************************************************************************/
 
+
+
 class DrawingBoard {
 
     #circleRadius;
@@ -43,12 +45,21 @@ class DrawingBoard {
 
     createPole = (xPos = 200, yPos = 200) => {
         let pole = drawPole(xPos, yPos)
+        pole.on('dblclick', function () {
+            deletePole(pole);
+            pole.destroy();
+        });
+
         this.polesShapes.push(pole);
         this.layer.add(pole).draw();
     }
 
     createZero = (xPos = 200, yPos = 200) => {
-        let zero = drawCircle(xPos, yPos, 6, true)
+        let zero = drawCircle(xPos, yPos, 5, true, 'green')
+        zero.on('dblclick', function () {
+            deleteZero(zero);
+            zero.destroy();
+        });
         this.zeroesShapes.push(zero);
         this.layer.add(zero).draw();
     }
@@ -70,14 +81,24 @@ class DrawingBoard {
     }
 
     #createUnitCircle(xCenter, yCenter, radius) {
-        let circle = drawCircle(xCenter, yCenter, radius, false, 'blue', 1);
+        let circle = drawCircle(xCenter, yCenter, radius, false, 'darkblue', 1);
         this.layer.add(circle);
+    }
+
+    /**  ------------------------------------------ Setters ------------------------------------------ **/
+
+    get getZeroes() {
+        return this.zeroesShapes;
+    }
+
+    set setPoles(poles) {
+        this.polesShapes = poles;
     }
 
     /**  ------------------------------------------ Getters ------------------------------------------ **/
 
-    get getZeroes() {
-        return this.zeroesShapes;
+    set setZeroes(zeroes) {
+        this.zeroesShapes = zeroes;
     }
 
     get getPoles() {

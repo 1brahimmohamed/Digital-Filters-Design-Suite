@@ -51,9 +51,10 @@ const setUpRequestData = ()=> {
  * function to send request to server
  * @returns {void}
  */
-const sendRequest = __ => {
+const sendRequest = () => {
 
     setUpRequestData();
+
 
     $.ajax({
         url: 'http://127.0.0.1:8000/suite/get-filter-response/',
@@ -68,7 +69,6 @@ const sendRequest = __ => {
             allPass: currentFilter.getAllPassFilters,
         }),
         success: function (response) {
-
             magnitudePlot.updatePlot(
                 {
                         x: response.normalizedFrequency,

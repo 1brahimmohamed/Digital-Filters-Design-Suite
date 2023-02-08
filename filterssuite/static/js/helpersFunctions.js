@@ -62,7 +62,7 @@ const checkIfDrawing = (x_current, y_current, zerosArr, polesArr) => {
  */
 const createMouseSignalPad = (padWidth, padHeight, padContainer) => {
     let stg = new Konva.Stage({
-        container:padContainer ,
+        container: padContainer,
         width: padWidth,
         height: padHeight,
     });
@@ -71,12 +71,24 @@ const createMouseSignalPad = (padWidth, padHeight, padContainer) => {
     let background = new Konva.Rect({
         x: 0,
         y: 0,
-        width:padWidth ,
+        width: padWidth,
         height: padHeight,
-        cornerRadius: 20,
+        cornerRadius: 10,
         fill: 'DimGrey',
     });
-    layer.add(background);
+
+    let padImg = new Image();
+    padImg.src = '../static/images/pad.png';
+
+    let img = new Konva.Image({
+        x: 0,
+        y: 0,
+        image: padImg,
+        width: padWidth,
+        height: padHeight,
+    });
+
+    layer.add(img);
     stg.add(layer);
 
     return stg;
@@ -87,7 +99,7 @@ const createMouseSignalPad = (padWidth, padHeight, padContainer) => {
  * @param {number} circX            - x coordinate of the circle
  * @param {number} circY            - y coordinate of the circle
  * @param {number} circRadius       - radius of the circle
- * @param {number} circStroke       - stroke color of the circle
+ * @param {string} circStroke       - stroke color of the circle
  * @param {boolean} circDraggable   - is the circle draggable
  * @param {number} circStrokeWidth  - stroke width of the circle
  * @returns {Konva.Circle}
@@ -98,7 +110,7 @@ const drawCircle = (
     circRadius = 0,
     circDraggable = false,
     circStroke = 'black',
-    circStrokeWidth = 2,
+    circStrokeWidth = 1.7,
 ) => {
     return new Konva.Circle({
         x: circX,
@@ -112,9 +124,9 @@ const drawCircle = (
 
 /**
  * Function to draw a line on the canvas
- * @param {number} linePoints       - array of points that make the line
+ * @param {array} linePoints       - array of points that make the line
  * @param lineDraggable             - is the line draggable
- * @param {number} lineStroke       - stroke color of the line
+ * @param {string} lineStroke       - stroke color of the line
  * @param {number} lineStrokeWidth  - stroke width of the line
  * @param {string} lineCap          - line cap
  * @param {string} lineJoin         - line join
@@ -124,7 +136,7 @@ const drawLine = (
     linePoints,
     lineDraggable = false,
     lineStroke = shapesDefaultColor,
-    lineStrokeWidth = 2,
+    lineStrokeWidth = 1,
     lineCap = 'round',
     lineJoin = 'round'
 ) => {
@@ -190,4 +202,16 @@ const drawPole = (xPos, yPos) => {
     return poleContainer;
 }
 
+
+const deleteZero = (zero) => {
+    let index = unitCircleBoard.getZeroes.indexOf(zero);
+    unitCircleBoard.setZeroes = unitCircleBoard.getZeroes.filter((zero, i) => i !== index);
+
+    sendRequest()
+}
+const deletePole = (pole) => {
+    let index = unitCircleBoard.getPoles.indexOf(pole);
+    unitCircleBoard.setPoles = unitCircleBoard.getPoles.filter((pole, i) => i !== index);
+    sendRequest()
+}
 
