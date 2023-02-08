@@ -33,6 +33,7 @@ html{
   margin-left: 110px;
   margin-right: 25px;
   height:fit-content;
+  display: block;
 }
 
 
@@ -44,10 +45,9 @@ html{
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 13px;
   height: 30px;
-  width: 50%;
-
+  width: 10%;
 }
 
 #design\ defaultOpen{
@@ -72,6 +72,27 @@ html{
 
 
 /*** Application's body ***/
+
+.main-nav {
+  background-color: #000000;
+  height: 40px;
+  position: center;
+  margin-top: -1.5rem;
+  margin-bottom: 1px;
+}
+
+.main-nav h1 {
+  color: #ffffff;
+  font-family: 'Arial', serif;
+  font-size: 21px;
+  font-weight: lighter;
+  line-height: 1;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: left;
+  padding-top: 11px;
+  margin-left: 10px;
+}
 
 .main-container{
   display: grid;
