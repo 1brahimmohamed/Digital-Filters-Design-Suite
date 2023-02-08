@@ -63,7 +63,7 @@ def test_all_pass(request):
         req = json.loads(request.body)
 
         all_pass_value = req['value']
-        all_pass_filter = DigitalFilter([], [])
+        all_pass_filter = DigitalFilter()
         all_pass_filter.add_all_pass(complex(all_pass_value['re'], all_pass_value['im']))
         normalized_freq, magnitude_response, all_pass_phase = all_pass_filter.response()
 
@@ -86,9 +86,6 @@ def signal_filtering(request):
         req = json.loads(request.body)
 
         real_time_signal = req['signal']
-        print(real_time_signal)
-
-        print(digital_filter.get_zeros())
         filtered_signal = digital_filter.apply_filter(real_time_signal)
 
         # plot in frontend normalized_freq (0.0 => pi) in x_axis, magnitude or phase in y_axis

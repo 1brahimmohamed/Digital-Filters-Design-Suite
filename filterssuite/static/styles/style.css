@@ -254,9 +254,6 @@ html{
   margin-top: 2px;
 }
 
-#signal a{
- width: 100%;
-}
 
 /*** Boxes ***/
 .content{
@@ -350,9 +347,10 @@ html{
   margin-top: 70px;
   margin-right: 20px;
   margin-left: 10px;
-  grid-template-columns: 1.5fr 6fr 3fr;
+  margin-top: 20px;
+  grid-template-columns: 1.5fr 3fr 6fr;
   grid-template-areas:
-    "catalogue graphs2 addfilter";
+    "menu1 catalogue addfilter graphs2";
 }
 
 .container-2 {
@@ -370,24 +368,34 @@ html{
 }
 
 #catalogue{
+  margin-right: 0px;
+  margin-left: 0px;
+  margin-top: 0px;
+  grid-area: catalogue;
   grid-template-columns: 1.5fr;
   grid-template-rows:  0fr;
   grid-template-areas:
     "cata"
+
 }
 
 #graphs2{
-  grid-template-columns: 3fr 3fr;
-  grid-template-rows:  0fr;
+  grid-area: graphs2;
+  grid-template-rows: 3fr 3fr;
+  grid-template-columns:  0fr;
   grid-template-areas:
-    "content7 content8 ";
+    "content7"
+    "content8";
 }
 
 #addfilter{
+  grid-area: addfilter;
   grid-template-columns: 3fr;
   grid-template-rows:  0fr;
   grid-template-areas:
     "addfil ";
+  width: 300px;
+  height: 540px;
 }
 
 
@@ -423,6 +431,11 @@ html{
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
+
+.scroll-images::-webkit-scrollbar{
+    display: none;
+  }
+
 .child img {
   width: 100px;
   height: 70%;
@@ -432,17 +445,6 @@ html{
 
 .child :hover{
   transform:scale(1.5);
-}
-.scroll-images::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-  border-radius: 3px;
-  background-color: #ffffff;
-}
-
-.scroll-images::-webkit-scrollbar-thumb {
-  background-color: black;
-  border-radius: 3px;
 }
 
 .child {
@@ -474,24 +476,20 @@ html{
 
 #content7 {
   grid-area: content7;
-   height: 600px;
-   width: 300px;
+   height: 270px;
+   width: 880px;
 }
 
 #content8 {
   grid-area: content8;
-  height: 600px;
-  width: 300px;
+  height: 270px;
+  width: 880px;
 }
 
 #addfil{
   grid-area: addfil;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
-  width: 300px; 
-  height: 450px;
-  margin-top: 60px;
-  
 }
 
 #all-pass-filters {
@@ -557,12 +555,13 @@ html{
 @media only screen and (max-width: 550px) {
   .container {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.5fr 1fr 1fr 1fr;
+    grid-template-rows: 0.2fr 0.5fr 1fr 1fr 1fr;
     grid-template-areas:
+      "menu1"
       "cata"
+      "addfil"
       "content7"
-      "content8"
-      "addfil" ;
+      "content8";
   }
 }
 

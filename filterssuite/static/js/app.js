@@ -44,7 +44,7 @@ let originalPhasePlot = new PlottedSignal('plot-page-1', [0], [0], 'freq', 'phas
 /**  -------------------------------------- HTML DOM Elements Declaration -------------------------------------- **/
 
 let downloadBtn = document.getElementById('download-btn'),
-    uploadFilterBtn = document.getElementById('upload-btn'),
+    uploadFilterBtn = document.getElementById('filter-upload-btn'),
     addAllPassBtn = document.getElementById('add-all-pass-btn'),
     removeAllPassBtn = document.getElementById('remove-all-pass-btn'),
     allPassValueBox = document.getElementById('all-pass-value'),

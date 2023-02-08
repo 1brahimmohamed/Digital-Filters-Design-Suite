@@ -25,7 +25,7 @@
 <body>
 
 <nav class="main-nav">
-    <h1>Digital Filters Design Suite</h1>
+    <h1 style="text-align: center">Digital Filters Design Suite</h1>
 </nav>
 
 <!--   Navbar     -->
@@ -45,14 +45,15 @@
             <div class="controls" id="menu1">
                 <div class="icon-bar">
                     <p>Filter</p>
-                    <input type="file" style="display: none" id="upload-btn">
-                    <a href="#" onclick="document.getElementById('upload-btn').click()"><i class='nevo bx bx-upload'></i></a>
-                    <a href="#" id="download-btn" ><i class='nevo bx bx-download'></i></a>
+                    <input type="file" style="display: none" id="filter-upload-btn">
+                    <a href="#" onclick="document.getElementById('filter-upload-btn').click()"><i class='nevo bx bx-upload'></i></a>
+                    <a href="#" id="filter-download-btn" ><i class='nevo bx bx-download'></i></a>
                 </div>
                 <div class="icon-bar" id="signal">
                     <p>Signal</p>
                     <input type="file" style="display: none" id="import-signal-btn">
                     <a href="#" onclick="document.getElementById('import-signal-btn').click()"><i class='nevo bx bx-upload'></i></a>
+                    <a href="#" id="signal-download-btn" ><i class='nevo bx bx-download'></i></a>
                 </div>
             </div>
             <!--   zeros poles menu     -->
@@ -169,6 +170,7 @@
                 </button>
             </div>
         </div>
+
 
         <div class="container-2" id="graphs2">
             <div class="content-2" id="content7">

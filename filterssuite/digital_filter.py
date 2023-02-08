@@ -16,15 +16,27 @@ class DigitalFilter:
 
     # Define getters
     def get_zeros(self):
+        """
+        Get the zeros of the filter.
+        """
         return self.__zeros[:]
 
     def get_poles(self):
+        """
+        Get the poles of the filter.
+        """
         return self.__poles[:]
 
     def get_gain(self):
+        """
+        Get the gain of the filter.
+        """
         return self.__gain
 
     def get_all_pass(self):
+        """
+        Set the all-passes of the filter.
+        """
         return self.__all_pass[:]
 
     # Define setters
@@ -53,16 +65,12 @@ class DigitalFilter:
         If w is not given, compute the response at a range of frequencies.
         Returns a tuple of w (frequency), magnitude, and phase.
         """
-
-        print(self.__zeros, self.__poles)
-
         if w is None:
             w, response = signal.freqz_zpk(self.__zeros, self.__poles, self.__gain)
             # `w` is the x_axis from 0 hz to fmax hz (default value normalized from 0 to pi)
             # `response` is the complex output of z_transform where we can get the magnitude & phase
         else:
             response = signal.zpk_eval_response(self.__zeros, self.__poles, self.__gain, w)
-
         magnitude = 20 * np.log10(np.abs(response))
         # convert from hz into decibels
         phase = np.unwrap(np.angle(response))   # `np.unwrap` to remove phase discontinuities
@@ -72,8 +80,6 @@ class DigitalFilter:
         """
         Add one all-pass filter with coefficient a to the filter.
         """
-
-        print(a)
         self.__all_pass.append(a)
         self.__poles.append(a)
         self.__zeros.append(1 / np.conj(a))
@@ -89,19 +95,31 @@ class DigitalFilter:
             b_list.append(1 / np.conj(a_list[i]))
         self.__zeros = [*self.__zeros, *b_list]
 
-    def remove_zero(self, zero: complex):
+    def remove_zero(self, zero:complex):
+        """
+        Remove one zero from the filter.
+        """
         self.__zeros.remove(zero)
 
-    def remove_pole(self, pole: complex):
+    def remove_pole(self, pole:complex):
+        """
+        Remove one pole from the filter.
+        """
         self.__poles.remove(pole)
 
     def remove_all_zeros(self):
+        """
+        Remove all zeros from the filter.
+        """
         self.__zeros = []
 
     def remove_all_poles(self):
+        """
+        Remove all poles from the filter.
+        """
         self.__poles= []
 
-    def remove_all_pass(self, a: complex):
+    def remove_all_pass(self, a:complex):
         """
         Remove one all-pass filter with coefficient a to the filter.
         """
@@ -117,8 +135,7 @@ class DigitalFilter:
         self.__poles = self.__poles[0:len(self.__poles) - len(self.__all_pass)]
         self.__all_pass = []
 
-    def apply_filter(self, value):
-        numerator, denominator = signal.zpk2tf(self.__zeros,self.__poles, self.__gain)
-        filtered_signal = np.real(signal.lfilter(numerator, denominator, value))
+    def apply_filter(self, values: list) -> []:
+        numerator , denominator = signal.zpk2tf(self.__zeros,self.__poles, self.__gain)
+        filtered_signal = np.real(signal.lfilter(numerator, denominator, values))
         return filtered_signal
-
