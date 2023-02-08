@@ -126,19 +126,19 @@ class Filter{
         this.#poles = poles;
     }
 
-    set setMagnitudeResponseData([xData, yData]){
-        this.#magnitudeResponseData[0].x = xData;
-        this.#magnitudeResponseData[0].y = yData;
+    set setMagnitudeResponseData(respObj){
+        this.#magnitudeResponseData[0].x = respObj.x;
+        this.#magnitudeResponseData[0].y = respObj.y;
     }
 
-    set setPhaseResponseData([xData, yData]){
-        this.#phaseResponseData[0].x = xData;
-        this.#phaseResponseData[0].y = yData;
+    set setPhaseResponseData(respObj){
+        this.#phaseResponseData[0].x =  respObj.x;
+        this.#phaseResponseData[0].y =  respObj.y;
     }
 
-    set setCorrectedPhaseResponseData([xData, yData]){
-        this.#correctedPhaseResponseData[0].x = xData;
-        this.#correctedPhaseResponseData[0].y = yData;
+    set setCorrectedPhaseResponseData(respObj){
+        this.#correctedPhaseResponseData[0].x = respObj.x;
+        this.#correctedPhaseResponseData[0].y = respObj.y;
     }
 
     /**  ------------------------------------------ Getters ------------------------------------------ **/
@@ -156,15 +156,24 @@ class Filter{
     }
 
     get getMagnitudeResponse(){
-        return [this.#magnitudeResponseData[0].x, this.#magnitudeResponseData[0].y];
+        return {
+            x: this.#magnitudeResponseData[0].x,
+            y: this.#magnitudeResponseData[0].y
+        };
     }
 
     get getPhaseResponse(){
-        return [this.#phaseResponseData[0].x, this.#phaseResponseData[0].y];
+        return {
+            x: this.#phaseResponseData[0].x,
+            y: this.#phaseResponseData[0].y
+        };
     }
 
     get getCorrectedPhaseResponse(){
-        return [this.#correctedPhaseResponseData[0].x, this.#correctedPhaseResponseData[0].y];
+        return {
+            x: this.#correctedPhaseResponseData[0].x,
+            y: this.#correctedPhaseResponseData[0].y
+        };
     }
 
     get getMagnitudeResponseData(){

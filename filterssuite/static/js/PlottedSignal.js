@@ -3,6 +3,8 @@ class PlottedSignal {
 
         this.divID = divID;
         this.color = color;
+        this.xLabel = xLabel;
+        this.yLabel = yLabel;
 
         this.data = [
             {
@@ -30,13 +32,14 @@ class PlottedSignal {
             },
             xaxis: {
                 title: {
-                    text: xLabel,
+                    text: this.xLabel,
                 },
                 range: [0, 3.5],
+                showgrid: true,
             },
             yaxis: {
                 title: {
-                    text: yLabel,
+                    text: this.yLabel,
                 },
             },
         };
@@ -54,7 +57,31 @@ class PlottedSignal {
     }
 
     updatePlot(data) {
-        Plotly.newPlot(
+
+        let max = Math.max(...data.y);
+        let min = Math.min(...data.y);
+        let range = max - min;
+
+        if (range < 1) {
+            console.log('y axis range is less than 1')
+            this.layout.yaxis = {
+                title: {
+                    text: this.yLabel,
+                },
+                range: [min - 0.5, max + 0.5],
+            };
+            console.log(this.layout.yaxis)
+        }
+        else {
+            this.layout.yaxis = {
+                title: {
+                    text: this.yLabel,
+                },
+                range: [min - 1, max + 1],
+            };
+        }
+
+        Plotly.react(
             this.divID,
             [{
                 x: data.x,
