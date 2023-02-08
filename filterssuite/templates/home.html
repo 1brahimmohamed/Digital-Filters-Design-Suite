@@ -15,12 +15,12 @@
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
 
     <!-- JavaScript files  -->
-    <script src="..https://cdn.plot.ly/plotly-latest.min.js"></script>
-    ..<script src="..https://cdnjs.cloudflare.com/ajax/libs/konva/8.3.14/konva.min.js"></script>
-    ..<script src="..https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-    ..<script src="..https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
-    ..<script src="..//code.jquery.com/jquery-1.11.1.min.js"></script>
-</he..ad>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/konva/8.3.14/konva.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
 
 <body>
 
@@ -43,37 +43,40 @@
             <div class="controls" id="menu1">
                 <div class="icon-bar">
                     <p>Filter</p>
-                    <input type="file" style="display: none" id="filter-upload-btn">
-                    <a href="#" onclick="document.getElementById('filter-upload-btn').click()"><i class='nevo bx bx-upload'></i></a>
-                    <a href="#" id="filter-download-btn" ><i class='nevo bx bx-download'></i></a>
+                    <input id="filter-upload-btn" style="display: none" type="file">
+                    <a href="#" onclick="document.getElementById('filter-upload-btn').click()"><i
+                            class='nevo bx bx-upload'></i></a>
+                    <a href="#" id="filter-download-btn"><i class='nevo bx bx-download'></i></a>
                 </div>
                 <div class="icon-bar" id="signal">
                     <p>Signal</p>
-                    <input type="file" style="display: none" id="import-signal-btn">
-                    <a href="#" onclick="document.getElementById('import-signal-btn').click()"><i class='nevo bx bx-upload'></i></a>
-                    <a href="#" id="signal-download-btn" ><i class='nevo bx bx-download'></i></a>
+                    <input id="import-signal-btn" style="display: none" type="file">
+                    <a href="#" onclick="document.getElementById('import-signal-btn').click()"><i
+                            class='nevo bx bx-upload'></i></a>
+                    <a href="#" id="signal-download-btn"><i class='nevo bx bx-download'></i></a>
                 </div>
             </div>
             <!--   zeros poles menu     -->
             <div id="menu2">
-            <div class="sidebar">
-                <nav>
-                    <div class="toggle">
-                    </div>
-                    <ul>
-                        <li class="nav-item navi active">
-                            <i class='nevo bx bx-radio-circle'></i>
-                        </li>
-                        <li class="nav-item navi">
-                            <i class='nevo bx bx-x'></i>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="icon-bar" id="pause">
-                    <input type="file" style="display: none">
-                    <a href="#" ><i class='nevo bx bx-pause-circle'></i></a>
-                    <a href="#"  ><i class='nevo bx bx-play-circle'></i></a>
+                <div class="sidebar">
+                    <nav>
+                        <div class="toggle">
+                        </div>
+                        <ul>
+                            <li class="nav-item navi active">
+                                <i class='nevo bx bx-radio-circle'></i>
+                            </li>
+                            <li class="nav-item navi">
+                                <i class='nevo bx bx-x'></i>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="icon-bar" id="pause">
+                    <a href="#" id="play-pause-btn" style="width: 100%">
+                        <i class='nevo bx bx-play-circle' id="play-pause-icon"></i>
+                    </a>
                 </div>
             </div>
 
@@ -93,7 +96,7 @@
 
             <!--         -->
             <div class="content" id="content3">
-                <div class="canvas" id="plot-1" ></div>
+                <div class="canvas" id="plot-1"></div>
             </div>
 
             <!--         -->
@@ -123,43 +126,43 @@
                 </button>
                 <div class="scroll-images">
                     <div class="child" id="1">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/0.1+0.7i.png"/></a>
                     </div>
                     <div class="child" id="2">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img img-selected" src="../static/images/0.3+0.2i.png"/></a>
                     </div>
                     <div class="child" id="3">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/0.7.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/-0.9.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/1+2i.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/3+4i.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/-0.5-0.5i.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/-0.8+0.4i.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/-1-0.9i.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/-1-1i.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/-2.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/i.png"/></a>
                     </div>
                     <div class="child">
-                        <a href="#"><img alt="image" class="child-img" src="../static/images/img.jpg"/></a>
+                        <a href="#"><img alt="image" class="child-img" src="../static/images/0.1.png"/></a>
                     </div>
                 </div>
                 <button class="right" onclick="rightScroll()">
@@ -170,29 +173,27 @@
 
         <div class="container-2" id="addfilter">
             <div class="content-2" id="addfil">
+                <p>
+                    All-Pass Filters
+                </p>
                 <div id="all-pass-filters">
-                    <div class="allpass" id="121">
-                        Hima
-                    </div>
-
-                    <div class="allpass" id="122">
-                        Hoda
-                    </div>
                 </div>
+                <label for="all-pass-value">
+                   A Value
+                </label>
                 <input id="all-pass-value"
-                       type="text"
-                       pattern="[+-]?(((\d+.\d|\d.\d+|\d+)[+-])?((\d+.\d|\d.\d+|\d+)j|j(\d+.\d|\d.\d+|\d+)|j)|(\d+.\d|\d.\d+|\d+)?e^(([+-]?|[+-]?()((\d+.\d|\d.\d+|\d+)j|j(\d+.\d|\d.\d+|\d+)|j)))|[+-]?([0-9]*[.])?[0-9]+">
-                <button class="btn2" id="add-all-pass-btn">
-                    Add filter
+                       style="display: inline"
+                       type="text">
+                <button class="btn2" id="add-all-pass-btn" style="display: inline">
+                    Add
                 </button>
                 <button class="btn2" id="remove-all-pass-btn">
                     Remove
                 </button>
                 <button class="btn2" id="clear-all-pass">
-                    Clear All All-Pass Filters
+                    Clear All
                 </button>
             </div>
-
         </div>
         <div class="container-2" id="graphs2">
             <div class="content-2" id="content7">
@@ -205,8 +206,6 @@
         </div>
 
 
-
-
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.1/math.js"></script>
@@ -216,11 +215,8 @@
 <script src="../static/js/DynamicPlot.js"></script>
 <script src="../static/js/Filter.js"></script>
 <script src="../static/js/request.js"></script>
-<script src="../static/js/UI-Handlers.js"></script>
-<script src="../static/js/scroll.js"></script>
 <script src="../static/js/layout.js" type="text/javascript"></script>
 <script src="../static/js/app.js"></script>
-
-</b..ody>
+</body>
 
 </html>

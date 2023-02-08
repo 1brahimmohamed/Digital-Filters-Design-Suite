@@ -28,27 +28,32 @@ let importedSignal = {
     y: []
 }
 
+let i = 0;
+let realtimeSignalInterval;
+let ct = 0;
+
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
-let currentFilter = new Filter(),
-    unitCircleBoard = new DrawingBoard('container', boardWidth, boardHeight),
-    magnitudePlot = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)', '#3f98ce'),
-    phasePlot = new PlottedSignal('plot-3', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
-    realTimePlot = new DynamicPlot('plot-2', 'time (s)', 'magnitude (dB)'),
-    realTimeFilteredPlot = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', '#089841', [0, 50], [-100, 1000]);
+let currentFilter           = new Filter(),
+    unitCircleBoard         = new DrawingBoard('container', boardWidth, boardHeight),
+    magnitudePlot           = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)', '#3f98ce'),
+    phasePlot               = new PlottedSignal('plot-3', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
+    realTimePlot            = new DynamicPlot('plot-2', 'time (s)', 'magnitude (dB)'),
+    realTimeFilteredPlot    = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', '#089841', [0, 50], [-100, 1000]);
 
 
-let originalPhasePlot = new PlottedSignal('plot-page-1', [0], [0], 'freq', 'phase', '#f64200'),
-    currentAllPassPlot = new PlottedSignal('plot-page-2', [0], [0], 'freq', 'phase');
+let originalPhasePlot   = new PlottedSignal('plot-page-1', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
+    currentAllPassPlot  = new PlottedSignal('plot-page-2', [0], [0], 'frequency (Hz)', 'phase (rad)', '#810b34');
 
 /**  -------------------------------------- HTML DOM Elements Declaration -------------------------------------- **/
 
-let downloadBtn = document.getElementById('download-btn'),
-    uploadFilterBtn = document.getElementById('filter-upload-btn'),
-    addAllPassBtn = document.getElementById('add-all-pass-btn'),
-    removeAllPassBtn = document.getElementById('remove-all-pass-btn'),
-    allPassValueBox = document.getElementById('all-pass-value'),
-    importSignalBtn = document.getElementById('import-signal-btn');
+const   downloadBtn         = document.getElementById('filter-download-btn'),
+        uploadFilterBtn     = document.getElementById('filter-upload-btn'),
+        addAllPassBtn       = document.getElementById('add-all-pass-btn'),
+        removeAllPassBtn    = document.getElementById('remove-all-pass-btn'),
+        allPassValueBox     = document.getElementById('all-pass-value'),
+        importSignalBtn     = document.getElementById('import-signal-btn'),
+        clearAllPassBtn     = document.getElementById('clear-all-pass');
 
 let mousePad = createMouseSignalPad(padWidth, padHeight, 'pad');
 
@@ -69,9 +74,7 @@ const mouseDownHandler = (e) => {
 
     sendRequest();
 }
-let ct = 0;
-unitCircleBoard.stage.on('mouseup', mouseDownHandler);
-mousePad.on('mousemove', (e) => {
+const mousePadHandler = (e) => {
     if (currentFilter.getZeros.length !== 0 || currentFilter.getPoles.length !== 0) {
         if (ct > 4) {
             mouseRealtimeSignal.push(mousePad.getPointerPosition().x)
@@ -84,7 +87,11 @@ mousePad.on('mousemove', (e) => {
         }
         ct++;
     }
-});
+}
+unitCircleBoard.stage.on('mouseup', mouseDownHandler);
+mousePad.on('mousemove', mousePadHandler);
+
+/**  ------------------------------------------ Buttons  Actions ------------------------------------------ **/
 
 downloadBtn.addEventListener('click', (e) => {
     let filterCSV = currentFilter.exportFilterToCSV();
@@ -136,7 +143,8 @@ addAllPassBtn.addEventListener('click', (e) => {
             id: filterID,
             filterValue: math.complex(`${filterValue}`)
         });
-    // sendRequest();
+
+    sendRequest();
 });
 
 removeAllPassBtn.addEventListener('click', (e) => {
@@ -148,11 +156,19 @@ removeAllPassBtn.addEventListener('click', (e) => {
         }
     });
     currentFilter.removeAllPassFilter(selectedAllPassFilter);
-    // sendRequest();
+    sendRequest();
 });
-let i = 0;
 
-let realtimeSignalInterval;
+clearAllPassBtn.addEventListener('click', (e) => {
+    let allPassFiltersList = document.querySelectorAll('.allpass');
+
+    allPassFiltersList.forEach(filter => {
+        filter.remove();
+    });
+    currentFilter.clearAllPass();
+    sendRequest();
+});
+
 importSignalBtn.addEventListener('change', (e) => {
     if (e.target.files.length !== 0) {
         importedSignal = {x: [], y: []};
@@ -173,19 +189,16 @@ importSignalBtn.addEventListener('change', (e) => {
                 importedSignal.y.push(d[keys[1]]);
             })
         }
-
+        playPauseBtnIcon.classList.remove('bx-play-circle');
+        playPauseBtnIcon.classList.add('bx-pause-circle');
         startInterval()
     }
 });
 
-// document.getElementById('zorar').addEventListener('click', (e) => {
-//     clearInterval(realtimeSignalInterval)
-// });
-//
-// document.getElementById('zorar1').addEventListener('click', (e) => {
-//     startInterval()
-// });
-
+allPassValueBox.addEventListener('input', (e) => {
+    let val = math.complex(`${allPassValueBox.value}`);
+    getAllPassRequest(val);
+});
 
 const startInterval = () => {
     realtimeSignalInterval = setInterval(() => {
@@ -203,6 +216,9 @@ const startInterval = () => {
         }
     }, 10);
 }
+
+
+
 
 
 
