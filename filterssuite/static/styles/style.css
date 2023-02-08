@@ -25,13 +25,36 @@ html{
 }
 
 /*** Style Navbar ***/
+.main-nav {
+  background-color: #000000;
+  height: 40px;
+  position: center;
+  margin-top: -1.5rem;
+  margin-bottom: 1px;
+  margin-left: -7px;
+  width:101%;
+}
+
+.main-nav h1 {
+  color: #ffffff;
+  font-family: 'Arial', serif;
+  font-size: 21px;
+  font-weight: lighter;
+  line-height: 1;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: left;
+  padding-top: 11px;
+  margin-left: 10px;
+}
 
 .navbar{
   align-items: center;
   align-content: center;
   position: center;
-  margin-left: 110px;
+  margin-left: 625px;
   margin-right: 25px;
+  margin-bottom: 5px;
   height:fit-content;
   display: block;
 }
@@ -47,7 +70,9 @@ html{
   cursor: pointer;
   font-size: 13px;
   height: 30px;
-  width: 10%;
+  width: 15%;
+  font-weight: bolder;
+
 }
 
 #design\ defaultOpen{
@@ -73,26 +98,6 @@ html{
 
 /*** Application's body ***/
 
-.main-nav {
-  background-color: #000000;
-  height: 40px;
-  position: center;
-  margin-top: -1.5rem;
-  margin-bottom: 1px;
-}
-
-.main-nav h1 {
-  color: #ffffff;
-  font-family: 'Arial', serif;
-  font-size: 21px;
-  font-weight: lighter;
-  line-height: 1;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  text-align: left;
-  padding-top: 11px;
-  margin-left: 10px;
-}
 
 .main-container{
   display: grid;
@@ -252,6 +257,16 @@ html{
 #menu1{
   grid-area: menu1;
   margin-top: 2px;
+}
+
+#pause{
+  margin-left: -10px;
+  align-items: center;
+  margin-top:82px;
+}
+
+#pause a{
+  font-size: 25px;
 }
 
 
