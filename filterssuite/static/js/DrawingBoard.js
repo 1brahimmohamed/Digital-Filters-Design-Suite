@@ -7,8 +7,6 @@
  *
  *******************************************************************************/
 
-
-
 class DrawingBoard {
 
     #circleRadius;
@@ -55,7 +53,7 @@ class DrawingBoard {
     }
 
     createZero = (xPos = 200, yPos = 200) => {
-        let zero = drawCircle(xPos, yPos, 5, true, 'green')
+        let zero = drawCircle(xPos, yPos, 5, true, 'black')
         zero.on('dblclick', function () {
             deleteZero(zero);
             zero.destroy();
@@ -64,7 +62,7 @@ class DrawingBoard {
         this.layer.add(zero).draw();
     }
 
-    clearBoard = __ => {
+    clearBoard = () => {
         this.zeroesShapes = [];
         this.polesShapes = [];
         this.layer.destroyChildren();

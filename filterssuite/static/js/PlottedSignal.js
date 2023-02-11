@@ -63,7 +63,6 @@ class PlottedSignal {
         let range = max - min;
 
         if (range < 1) {
-            console.log('y axis range is less than 1')
             this.layout.yaxis = {
                 title: {
                     text: this.yLabel,

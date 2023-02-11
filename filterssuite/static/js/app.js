@@ -14,6 +14,8 @@ let circleDiv = document.getElementById('container'),
 const boardWidth = circleDiv.offsetWidth,
     boardHeight = circleDiv.offsetHeight;
 
+console.log(boardWidth, boardHeight)
+
 const padWidth = padDiv.offsetWidth,
     padHeight = padDiv.offsetHeight;
 
@@ -31,6 +33,11 @@ let importedSignal = {
 let i = 0;
 let realtimeSignalInterval;
 let ct = 0;
+let isDrawing = false,
+    mousePos = {
+        x: 0,
+        y: 0
+    }
 
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
@@ -61,17 +68,20 @@ const mouseDownHandler = (e) => {
     let xCurr = unitCircleBoard.stage.getPointerPosition().x,
         yCurr = unitCircleBoard.stage.getPointerPosition().y;
 
-
-    let isDrawing = checkIfDrawing(xCurr, yCurr, unitCircleBoard.getZeroes, unitCircleBoard.getPoles);
-
+    mousePos = {
+        x: xCurr,
+        y: yCurr
+    }
+    isDrawing = checkIfDrawing(xCurr, yCurr, unitCircleBoard.getZeroes, unitCircleBoard.getPoles);
+}
+const mouseUpHandler = (e) => {
     if (isDrawing) {
         if (drawZero) {
-            unitCircleBoard.createZero(xCurr, yCurr);
+            unitCircleBoard.createZero(mousePos.x, mousePos.y);
         } else {
-            unitCircleBoard.createPole(xCurr, yCurr);
+            unitCircleBoard.createPole(mousePos.x, mousePos.y);
         }
     }
-
     sendRequest();
 }
 const mousePadHandler = (e) => {
@@ -88,7 +98,8 @@ const mousePadHandler = (e) => {
         ct++;
     }
 }
-unitCircleBoard.stage.on('mouseup', mouseDownHandler);
+unitCircleBoard.stage.on('mousedown', mouseDownHandler);
+unitCircleBoard.stage.on('mouseup', mouseUpHandler);
 mousePad.on('mousemove', mousePadHandler);
 
 /**  ------------------------------------------ Buttons  Actions ------------------------------------------ **/
@@ -133,9 +144,9 @@ uploadFilterBtn.addEventListener('change', (e) => {
 
 addAllPassBtn.addEventListener('click', (e) => {
     let filterID = Date.now(),
-        filterValue = allPassValueBox.value;
+        filterValue = allPassValueBox.value.replace("j", "i");
 
-    createAllPassFilterDiv(filterID, filterValue);
+    createAllPassFilterDiv(filterID, allPassValueBox.value);
     setEventListenersOnAllPassList();
 
     currentFilter.addAllPassFilter(
@@ -191,12 +202,15 @@ importSignalBtn.addEventListener('change', (e) => {
         }
         playPauseBtnIcon.classList.remove('bx-play-circle');
         playPauseBtnIcon.classList.add('bx-pause-circle');
+        i = 0;
         startInterval()
     }
 });
 
 allPassValueBox.addEventListener('input', (e) => {
-    let val = math.complex(`${allPassValueBox.value}`);
+    let strVal = allPassValueBox.value.replace("j", "i");
+    console.log(strVal)
+    let val = math.complex(strVal);
     getAllPassRequest(val);
 });
 

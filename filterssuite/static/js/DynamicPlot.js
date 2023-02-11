@@ -1,7 +1,13 @@
 class DynamicPlot {
-    #center
 
-    constructor(divID, xLabel = 'time (s)', yLabel = 'magnitude (dB)', color = 'rgb(0,0,0)', xrange = [0, 50], yrange = [-100, 500]) {
+    #center
+    constructor(
+        divID,
+        xLabel = 'time (s)',
+        yLabel = 'magnitude (dB)',
+        color = 'rgb(0,0,0)',
+        xRange = [0, 50],
+    ) {
         this.#center = 0;
         this.divID = divID;
         this.color = color;
@@ -11,7 +17,7 @@ class DynamicPlot {
                 mode: "lines",
                 type: "scatter",
                 name: 'Signal',
-                line:{
+                line: {
                     color: this.color,
                 }
             }
@@ -35,14 +41,12 @@ class DynamicPlot {
                 title: {
                     text: xLabel,
                 },
-                // range: xrange,
-                range: [0,50],
+                range: xRange,
             },
             yaxis: {
                 title: {
                     text: yLabel,
                 },
-                // range: yrange,
             },
         };
 
@@ -50,7 +54,7 @@ class DynamicPlot {
     }
 
     #plot() {
-        Plotly.plot(
+        Plotly.newPlot(
             this.divID,
             this.data,
             this.layout,
@@ -59,12 +63,12 @@ class DynamicPlot {
     }
 
     updateDynamicPlot(data) {
-        Plotly.extendTraces(this.divID ,{ y:[[data]]}, [0]);
+        Plotly.extendTraces(this.divID, {y: [[data]]}, [0]);
         this.#center++;
-        if(this.#center > 50) {
-            Plotly.relayout(this.divID,{
+        if (this.#center > 50) {
+            Plotly.relayout(this.divID, {
                 xaxis: {
-                    range: [this.#center-50,this.#center+50]
+                    range: [this.#center - 50, this.#center + 50]
                 }
             });
         }

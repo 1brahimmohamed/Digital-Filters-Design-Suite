@@ -30,8 +30,9 @@ const setUpRequestData = () => {
     }
 
     for (let i = 0; i < unitCircleBoard.getPoles.length; i++) {
-        let pole = unitCircleBoard.getPoles[i], poleX = pole.x() + pole.width() / 2,
-            poleY = pole.y() + pole.height() / 2;
+        let pole = unitCircleBoard.getPoles[i],
+            poleX = pole.getAttr("actualX"),
+            poleY = pole.getAttr("actualY");
 
         let normalizedX = +((poleX - unitCircleBoard.getCircleCenterX) / unitCircleBoard.getCircleRadius).toFixed(4),
             normalizedY = -((poleY - unitCircleBoard.getCircleCenterY) / unitCircleBoard.getCircleRadius).toFixed(4);
@@ -79,9 +80,16 @@ const sendRequest = () => {
                 y: response.phaseResponse,
             }
 
-            magnitudePlot.updatePlot(currentFilter.getMagnitudeResponse);
-            phasePlot.updatePlot(currentFilter.getPhaseResponse);
-            originalPhasePlot.updatePlot(currentFilter.getPhaseResponse);
+            if (unitCircleBoard.getZeroes.length === 0 && unitCircleBoard.getPoles.length === 0) {
+                magnitudePlot.updatePlot({x: [0], y: [0]})
+                phasePlot.updatePlot({x: [0], y: [0]})
+                originalPhasePlot.updatePlot({x: [0], y: [0]})
+            }
+            else{
+                magnitudePlot.updatePlot(currentFilter.getMagnitudeResponse);
+                phasePlot.updatePlot(currentFilter.getPhaseResponse);
+                originalPhasePlot.updatePlot(currentFilter.getPhaseResponse);
+            }
         }
     })
 }

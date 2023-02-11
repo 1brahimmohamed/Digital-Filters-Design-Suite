@@ -40,11 +40,15 @@ const checkIfDrawing = (x_current, y_current, zerosArr, polesArr) => {
 
     for (let i = 0; i < polesArr.length; i++) {
 
+        let poleX = polesArr[i].getAttr("actualX"),
+            poleY = polesArr[i].getAttr("actualY"),
+            width = polesArr[i].getAttr("actualWidth")/2;
+
         if (
-            x_current >= polesArr[i].x() - offset &&
-            x_current < polesArr[i].x() + polesArr[i].width() + offset &&
-            y_current >= polesArr[i].y() - offset &&
-            y_current < polesArr[i].y() + polesArr[i].height() + offset
+            x_current >= poleX - width - offset &&
+            x_current < poleX + width + offset &&
+            y_current >= poleY - width - offset &&
+            y_current < poleY + width + offset
         ) {
             return false;
         }
@@ -154,61 +158,61 @@ const drawLine = (
  * Function to draw a pole on the canvas
  * @param {number} xPos      - x coordinate of the pole
  * @param {number} yPos      - y coordinate of the pole
- * @returns {Konva.Group}
+ * @returns {Konva.Shape}
  **/
 const drawPole = (xPos, yPos) => {
 
     let shapeLength = 10,
         shapeWidth = 10;
 
-    // let poleX = new Konva.Shape({
-    //     sceneFunc: function (context, shape) {
-    //         context.beginPath();
-    //         context.moveTo(xPos - shapeWidth/2, yPos - shapeLength/2);
-    //         context.lineTo(xPos + shapeWidth/2, yPos + shapeLength/2);
-    //         context.moveTo(xPos + shapeWidth/2, yPos - shapeLength/2);
-    //         context.lineTo(xPos - shapeWidth/2, yPos + shapeLength/2);
-    //         context.closePath();
-    //
-    //         // (!) Konva specific method, it is very important
-    //         context.fillStrokeShape(shape);
-    //     },
-    //     stroke: 'black',
-    //     strokeWidth: 2,
-    //     draggable: false,
-    // });
+    let poleX = new Konva.Shape({
+        sceneFunc: function (context, shape) {
+            context.beginPath();
+            context.moveTo(xPos - shapeWidth/2, yPos - shapeLength/2);
+            context.lineTo(xPos + shapeWidth/2, yPos + shapeLength/2);
+            context.moveTo(xPos + shapeWidth/2, yPos - shapeLength/2);
+            context.lineTo(xPos - shapeWidth/2, yPos + shapeLength/2);
+            context.closePath();
 
-    let poleContainer = new Konva.Rect({
-        x: xPos - shapeWidth / 2,
-        y: yPos - shapeLength / 2,
-        width: 12,
-        height: 12,
-        draggable: true,
-        fill: 'black',
+            // (!) Konva specific method, it is very important
+            context.fillStrokeShape(shape);
+        },
+        stroke: 'black',
+        strokeWidth: 2,
+        draggable: true
     });
 
-    let poleGroup = new Konva.Group({
-        x: xPos,
-        y: yPos,
-        draggable: false,
-        fill: 'red',
+    poleX.setAttr("startX", xPos);
+    poleX.setAttr("actualX", xPos);
+    poleX.setAttr("startY", yPos);
+    poleX.setAttr("actualY", yPos);
+    poleX.setAttr("actualWidth", shapeWidth);
+
+    poleX.on('dragend', () => {
+        poleX.setAttr("actualX", poleX.getAttr("startX") + poleX.x());
+        poleX.setAttr("actualY", poleX.getAttr("startY") + poleX.y());
+        sendRequest();
     });
 
-    //
-    // poleGroup.add(poleContainer);
-    // console.log('Pole Group Pos', poleGroup.x(), poleGroup.y())
-    // console.log(poleGroup)
-
-    return poleContainer;
+    return poleX;
 }
 
 
+/**
+ * function to delete a zero on the canvas
+ * @param {Konva.Circle} zero
+ * @returns {void}
+ * **/
 const deleteZero = (zero) => {
     let index = unitCircleBoard.getZeroes.indexOf(zero);
     unitCircleBoard.setZeroes = unitCircleBoard.getZeroes.filter((zero, i) => i !== index);
-
     sendRequest()
 }
+/**
+ * function to delete a pole on the canvas
+ * @param {Konva.Shape} pole
+ * @returns {void}
+ * **/
 const deletePole = (pole) => {
     let index = unitCircleBoard.getPoles.indexOf(pole);
     unitCircleBoard.setPoles = unitCircleBoard.getPoles.filter((pole, i) => i !== index);
