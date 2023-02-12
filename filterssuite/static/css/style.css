@@ -343,7 +343,7 @@ html {
     background: #f4f4f4;
     box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
     margin-left: 330px;
-    margin-bottom: -16px;
+    margin-bottom: -17px;
     height: 20px;
     width: 170px;
     font-weight: 200; 
@@ -522,7 +522,6 @@ html {
 
 /*** Boxes ***/
 .content-2 {
-    /* border-radius: var(--main-radius); */
     border-top-left-radius: var(--main-radius);
     border-bottom-left-radius: var(--main-radius);
     border-bottom-right-radius: var(--main-radius);
@@ -536,13 +535,16 @@ html {
 }
 
 #content7 {
+    margin-top: -20px;
     margin-left: 150px;
+    margin-bottom: 10px;
     grid-area: content7;
     height: 300px;
     width: 500px;
 }
 
 #content8 {
+    margin-top: -20px;
     margin-left: 150px;
     grid-area: content8;
     height: 300px;
@@ -561,7 +563,8 @@ html {
     background: #f4f4f4;
     box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
     margin-left: 520px;
-    margin-bottom: -16px;
+    /*margin-bottom: -2px;*/
+    margin-top: -17px;
     height: 20px;
     width: 130px;
     font-weight: 200; 
