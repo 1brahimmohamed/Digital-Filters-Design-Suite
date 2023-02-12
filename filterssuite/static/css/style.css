@@ -140,9 +140,11 @@ html {
 
 #graphs {
     grid-template-columns: 0.4fr 0.4fr;
-    grid-template-rows:  0fr 0fr;
+    grid-template-rows:  0fr 0fr 0fr 0fr;
     grid-template-areas:
+    "label3 label5"
     "content3 content5"
+    "label4 label6"
     "content4 content6";
 }
 
@@ -162,7 +164,7 @@ html {
 
 #menu2 {
     grid-area: menu2;
-    margin-top: -200px;
+    margin-top: 3px;
     margin-left: 10px;
 }
 
@@ -221,7 +223,7 @@ html {
 }
 
 .icon-bar {
-    grid-area: menu1;
+    grid-area: menu2;
     width: 70px;
     height: fit-content;
     backdrop-filter: blur(6px);
@@ -258,14 +260,15 @@ html {
 
 #menu1 {
     grid-area: menu1;
-    margin-top: 2px;
+    margin-top: 25px;
 }
 
 #pause {
-    width: 35px;
-    margin-left: 5px;
+    width: 30px;
+    height: 38px;
+    margin-left: 17px;
     align-items: center;
-    margin-top: 82px;
+    margin-top: 50px;
 }
 
 #pause a {
@@ -275,7 +278,9 @@ html {
 
 /*** Boxes ***/
 .content {
-    border-radius: var(--main-radius);
+    border-top-left-radius: var(--main-radius);
+    border-bottom-left-radius: var(--main-radius);
+    border-bottom-right-radius: var(--main-radius);
     padding-top: var(--main-padding);
     display: flex;
     justify-content: center;
@@ -287,12 +292,15 @@ html {
 
 #content1 {
     grid-area: content1;
+    border-top-right-radius: var(--main-radius);
+    margin-top: 25px;
     height: 350px;
     width: 350px;
 }
 
 #content2 {
     grid-area: content2;
+    border-top-right-radius: var(--main-radius);
     height: 220px;
     width: 350px;
 }
@@ -321,6 +329,39 @@ html {
     width: 500px;
 }
 
+
+
+.labelcontent{
+    border-top-left-radius: var(--main-radius);
+    border-top-right-radius: var(--main-radius);
+    padding-top: var(--main-padding);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: #f4f4f4;
+    box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+    margin-left: 330px;
+    margin-bottom: -16px;
+    height: 20px;
+    width: 170px;
+    font-weight: 200; 
+    font-size: 16px;
+
+}
+
+#label3 {
+    grid-area: label3;
+}
+#label4 {
+    grid-area: label4;
+}
+#label5 {
+    grid-area: label5;
+}
+#label6 {
+    grid-area: label6;
+}
 
 /*** Canvas inside boxes ***/
 .canvas {
@@ -392,10 +433,12 @@ html {
 
 #graphs2 {
     grid-template-columns: 3fr;
-    grid-template-rows:  0fr 0fr;
+    grid-template-rows:  0fr 0fr 0fr 0fr;
     grid-template-areas:
+    "label7"
     "content7"
-    "content8 ";
+    "label8 "
+    "content8";
 }
 
 #addfilter {
@@ -478,7 +521,10 @@ html {
 
 /*** Boxes ***/
 .content-2 {
-    border-radius: var(--main-radius);
+    /* border-radius: var(--main-radius); */
+    border-top-left-radius: var(--main-radius);
+    border-bottom-left-radius: var(--main-radius);
+    border-bottom-right-radius: var(--main-radius);
     padding-top: var(--main-padding);
     display: flex;
     justify-content: center;
@@ -502,6 +548,36 @@ html {
     width: 500px;
 }
 
+
+.labelcontent2{
+    border-top-left-radius: var(--main-radius);
+    border-top-right-radius: var(--main-radius);
+    padding-top: var(--main-padding);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: #f4f4f4;
+    box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+    margin-left: 520px;
+    margin-bottom: -16px;
+    height: 20px;
+    width: 130px;
+    font-weight: 200; 
+    font-size: 16px;
+
+}
+
+
+#label7 {
+    grid-area: label7;
+}
+
+#label8 {
+    grid-area: label8;
+}
+
+
 #addfil {
     grid-area: addfil;
     border-radius: var(--main-radius);
@@ -515,7 +591,7 @@ html {
 #all-pass-filters {
     border-radius: 10px;
     width: 310px;
-    height: 350px;
+    height: 330px;
     margin-top: 5px;
     background-color: rgb(218, 216, 216);
 }
@@ -539,6 +615,7 @@ html {
     height: 25px;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: -120px;
 }
 
 #all-pass-value:hover {
@@ -564,6 +641,20 @@ html {
 .btn2:active {
     box-shadow: 0 2px #666;
     transform: translateY(2px);
+}
+
+#add-all-pass-btn{
+    margin-top: -40px;
+    margin-right: -170px;
+}
+
+#remove-all-pass-btn{
+    margin-right: 138px;
+}
+
+#clear-all-pass{
+    margin-top: -43px;
+    margin-right: -140px;
 }
 
 .canvas {

@@ -47,16 +47,6 @@
                             class='nevo bx bx-upload'></i></a>
                     <a href="#" id="filter-download-btn"><i class='nevo bx bx-download'></i></a>
                 </div>
-                <div class="icon-bar" id="signal">
-                    <p>Signal</p>
-                    <input id="import-signal-btn" style="display: none" type="file">
-                    <a href="#" onclick="document.getElementById('import-signal-btn').click()"><i
-                            class='nevo bx bx-upload'></i></a>
-                    <a href="#" id="signal-download-btn"><i class='nevo bx bx-download'></i></a>
-                </div>
-            </div>
-            <!--   zeros poles menu     -->
-            <div id="menu2">
                 <div class="sidebar">
                     <nav>
                         <div class="toggle">
@@ -70,6 +60,18 @@
                             </li>
                         </ul>
                     </nav>
+                </div>
+               
+            </div>
+            <!--   zeros poles menu     -->
+            <div id="menu2">
+                
+                <div class="icon-bar" id="signal">
+                    <p>Signal</p>
+                    <input id="import-signal-btn" style="display: none" type="file">
+                    <a href="#" onclick="document.getElementById('import-signal-btn').click()"><i
+                            class='nevo bx bx-upload'></i></a>
+                    <a href="#" id="signal-download-btn"><i class='nevo bx bx-download'></i></a>
                 </div>
 
                 <div class="icon-bar" id="pause">
@@ -88,27 +90,47 @@
 
             <!--   Mouse Pad    -->
             <div class="content" id="content2">
-                <div class="canvas" id="pad"></div>
+                <div class="canvas" id=""></div>
             </div>
         </div>
         <div class="container" id="graphs">
 
             <!--         -->
+            <div class="labelcontent" id="label3">
+                <label for="all-pass-original-graph">
+                    Magnitude Response
+                 </label>
+            </div>
             <div class="content" id="content3">
                 <div class="canvas" id="plot-1"></div>
             </div>
 
             <!--         -->
+            <div class="labelcontent" id="label4">
+                <label for="all-pass-original-graph">
+                    Real Time Signal
+                 </label>
+            </div>
             <div class="content" id="content4">
                 <div class="canvas" id="plot-2"></div>
             </div>
 
             <!--         -->
+            <div class="labelcontent" id="label5">
+                <label for="all-pass-original-graph">
+                    Phase Response
+                 </label>
+            </div>
             <div class="content" id="content5">
                 <div class="canvas" id="plot-3"></div>
             </div>
 
             <!--         -->
+            <div class="labelcontent" id="label6">
+                <label for="all-pass-original-graph">
+                    Filtered Signal
+                 </label>
+            </div>
             <div class="content" id="content6">
                 <div class="canvas" id="plot-4"></div>
             </div>
@@ -196,13 +218,24 @@
             </div>
         </div>
         <div class="container-2" id="graphs2">
+            <div class="labelcontent2" id="label7">
+                <label for="all-pass-original-graph">
+                    Original Phase
+                 </label>
+            </div>
             <div class="content-2" id="content7">
                 <div class="canvas" id="plot-page-1"></div>
             </div>
             <!--         -->
+            <div class="labelcontent2" id="label8">
+                <label for="all-pass-original-graph">
+                    All-Pass Phase
+                 </label>
+            </div>
             <div class="content-2" id="content8">
                 <div class="canvas" id="plot-page-2"></div>
             </div>
+           
         </div>
 
 
