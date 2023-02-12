@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * File Name  : PlottedSignal.js
+ * Type       : Class
+ * Description: Static Plots Class
+ * Author     : Ibrahim Mohamed
+ *
+ *******************************************************************************/
+
+
 class PlottedSignal {
     constructor(divID, xData, yData, xLabel = 'frequency (Hz)', yLabel = 'magnitude (dB)', color = 'rgb(0, 0, 0)') {
 

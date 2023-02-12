@@ -72,15 +72,6 @@ const createMouseSignalPad = (padWidth, padHeight, padContainer) => {
     });
     let layer = new Konva.Layer();
 
-    let background = new Konva.Rect({
-        x: 0,
-        y: 0,
-        width: padWidth,
-        height: padHeight,
-        cornerRadius: 10,
-        fill: 'DimGrey',
-    });
-
     let padImg = new Image();
     padImg.src = '../static/images/pad.png';
 
@@ -197,7 +188,6 @@ const drawPole = (xPos, yPos) => {
     return poleX;
 }
 
-
 /**
  * function to delete a zero on the canvas
  * @param {Konva.Circle} zero
@@ -208,6 +198,7 @@ const deleteZero = (zero) => {
     unitCircleBoard.setZeroes = unitCircleBoard.getZeroes.filter((zero, i) => i !== index);
     sendRequest()
 }
+
 /**
  * function to delete a pole on the canvas
  * @param {Konva.Shape} pole

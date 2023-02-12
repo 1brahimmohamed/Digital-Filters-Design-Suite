@@ -20,7 +20,6 @@ let currentImgIndex = 1;
 
 /**  ---------------------------------------------- Event Listeners ---------------------------------------------- **/
 
-console.log(navItemsUp)
 // Shapes Side Bar
 navItemsUp.forEach(navItemUpper => {
 
@@ -82,6 +81,7 @@ const openPage = (pageName, elmnt, color)=> {
     document.getElementById(pageName).style.display = "block";
     elmnt.style.backgroundColor = color;
 }
+
 /**
  * function to set id for images catalog by their names
  * @returns {void}
@@ -97,6 +97,7 @@ const setIDForImages = () => {
  * function to scroll Up the images
  * @returns {void}
  * **/
+
 const leftScroll = () => {
     item.scrollBy(-130, 0);
     if (currentImgIndex > 0 && currentImgIndex < imgs.length) {
@@ -148,7 +149,7 @@ const setEventListenersOnAllPassList = () => {
 }
 
 /**
- * function to create allpass filter div
+ * function to create all-pass filter div
  * @param filterID
  * @param filterValue
  * @returns {void}
@@ -161,9 +162,7 @@ const createAllPassFilterDiv = (filterID, filterValue) => {
     document.getElementById('all-pass-filters').appendChild(filterDiv);
 }
 
-setEventListenersOnAllPassList();
-setIDForImages();
-
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("design defaultOpen").click();
+
 

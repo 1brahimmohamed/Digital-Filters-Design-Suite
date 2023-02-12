@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * File Name  : DynamicPlot.js
+ * Type       : Class
+ * Description: Dynamic Real-time Plot Class
+ * Author     : Ibrahim Mohamed
+ *
+ *******************************************************************************/
+
 class DynamicPlot {
 
     #center

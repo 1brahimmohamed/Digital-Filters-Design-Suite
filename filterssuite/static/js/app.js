@@ -7,37 +7,42 @@
  *
  *******************************************************************************/
 
+/**  ------------------------------------------ Global Variables ------------------------------------------ **/
 
-let circleDiv = document.getElementById('container'),
-    padDiv = document.getElementById('pad');
-
-const boardWidth = circleDiv.offsetWidth,
-    boardHeight = circleDiv.offsetHeight;
-
-console.log(boardWidth, boardHeight)
-
-const padWidth = padDiv.offsetWidth,
+// board & mouse pad dimensions variables (constant values throughout the app [only changed & initialized once])
+const
+    circleDiv = document.getElementById('container'),
+    padDiv = document.getElementById('pad'),
+    boardWidth = circleDiv.offsetWidth,
+    boardHeight = circleDiv.offsetHeight,
+    padWidth = padDiv.offsetWidth,
     padHeight = padDiv.offsetHeight;
 
-let drawZero = true;
-let selectedAllPassFilter = null;
+
+let drawZero = true,                    // flag to determine if the user is drawing a zero or a pole
+    isDrawing = false;                  // flag to determine if the user is drawing or dragging
+
+let mousePad = null;                    // variable to store the mouse pad object
+let selectedAllPassFilter = null;       // variable to store the selected all-pass filter
 
 let mouseRealtimeSignal = [],
     ImportedRealtimeSignal = [];
 
-let importedSignal = {
-    x: [],
-    y: []
-}
-
-let i = 0;
-let realtimeSignalInterval;
-let ct = 0;
-let isDrawing = false,
+// objects to store the current mouse position and the imported signal
+let
+    importedSignal = {
+        x: [],
+        y: []
+    },
     mousePos = {
         x: 0,
         y: 0
     }
+
+let realtimeSignalInterval;     // variable to store the setInterval function of the realtime signal
+
+let i = 0;                      // variable to store the current index of the imported signal to view it as realtime
+let counter = 0;                // variable to store counts of the mouse pad to do sampling
 
 /**  ------------------------------------------ Objects Declaration ------------------------------------------ **/
 
@@ -62,8 +67,15 @@ const   downloadBtn         = document.getElementById('filter-download-btn'),
         importSignalBtn     = document.getElementById('import-signal-btn'),
         clearAllPassBtn     = document.getElementById('clear-all-pass');
 
-let mousePad = createMouseSignalPad(padWidth, padHeight, 'pad');
 
+/**  ---------------------------------------------- Functions  ---------------------------------------------- **/
+
+
+/**
+ * function to handle the mouse down event on the board
+ * @param {event} e
+ * @returns {void}
+ * **/
 const mouseDownHandler = (e) => {
     let xCurr = unitCircleBoard.stage.getPointerPosition().x,
         yCurr = unitCircleBoard.stage.getPointerPosition().y;
@@ -74,6 +86,13 @@ const mouseDownHandler = (e) => {
     }
     isDrawing = checkIfDrawing(xCurr, yCurr, unitCircleBoard.getZeroes, unitCircleBoard.getPoles);
 }
+
+/**
+ * function to handle the mouse up event on the board
+ * @param {event} e
+ * @returns {void}
+ * **/
+
 const mouseUpHandler = (e) => {
     if (isDrawing) {
         if (drawZero) {
@@ -84,23 +103,25 @@ const mouseUpHandler = (e) => {
     }
     sendRequest();
 }
+
+/**
+ * function to handle the mouse move event on the mouse pad
+ * **/
 const mousePadHandler = (e) => {
     if (currentFilter.getZeros.length !== 0 || currentFilter.getPoles.length !== 0) {
-        if (ct > 4) {
+        if (counter > 4) {
             mouseRealtimeSignal.push(mousePad.getPointerPosition().x)
             if (mouseRealtimeSignal.length > 20) {
                 mouseRealtimeSignal.shift();
             }
             realTimePlot.updateDynamicPlot(mousePad.getPointerPosition().x);
             filerSignalRequest(mouseRealtimeSignal)
-            ct = 0;
+            counter = 0;
         }
-        ct++;
+        counter++;
     }
 }
-unitCircleBoard.stage.on('mousedown', mouseDownHandler);
-unitCircleBoard.stage.on('mouseup', mouseUpHandler);
-mousePad.on('mousemove', mousePadHandler);
+
 
 /**  ------------------------------------------ Buttons  Actions ------------------------------------------ **/
 
@@ -125,6 +146,8 @@ uploadFilterBtn.addEventListener('change', (e) => {
             unitCircleBoard.clearBoard();
 
             parsedFile.map((d) => {
+
+                // convert the normal coordinates to actual coordinates on the board
                 let xNormal = d[keys[1]],
                     yNormal = d[keys[2]],
                     xActual = xNormal * unitCircleBoard.getCircleRadius + unitCircleBoard.getCircleCenterX,
@@ -242,7 +265,20 @@ const startInterval = () => {
 }
 
 
+const main = () => {
+    // catalog images id setup
+    setIDForImages();
+    setEventListenersOnAllPassList();
+    mousePad = createMouseSignalPad(padWidth, padHeight, 'pad');
 
+    // add event listeners to the boards (drawing & mouse pad)
+    unitCircleBoard.stage.on('mousedown', mouseDownHandler);
+    unitCircleBoard.stage.on('mouseup', mouseUpHandler);
+    mousePad.on('mousemove', mousePadHandler);
+}
+
+// run the main function (program entry point)
+main();
 
 
 
