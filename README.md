@@ -64,12 +64,19 @@ master
 ### Quick Preview
 
 #### Add & Drag Multiple Zeros & Poles to the unit circle.
+![Add_Drag](filterssuite/static/gifs/add_drag.gif)
 #### Upload Signals, Apply the Filter on it & play/pause it.
+![Upload](filterssuite/static/gifs/upload.gif)
 #### Low Pass Filter
+![LPF](filterssuite/static/gifs/low_pass.gif)
 #### High Pass Filter
+![HPF](filterssuite/static/gifs/high_pass.gif)
 #### Band Pass Filter
+![BPF](filterssuite/static/gifs/band_pass.gif)
 #### Band Stop (Notch) Filter
+![Notch](filterssuite/static/gifs/notch.gif)
 #### Phase Correction & Catalog of All-Pass Filters
+![Phase_Correction](filterssuite/static/gifs/phase_correction.gif)
 
 ### Run the Project 
 1. Install Python3 in your computer
