@@ -143,19 +143,21 @@ uploadFilterBtn.addEventListener('change', (e) => {
 });
 
 addAllPassBtn.addEventListener('click', (e) => {
-    let filterID = Date.now(),
-        filterValue = allPassValueBox.value.replace("j", "i");
+    if (allPassValueBox.value !== '' && currentFilter.getPhaseResponse.x.length > 1){
+        let filterID = Date.now(),
+            filterValue = allPassValueBox.value.replace("j", "i");
 
-    createAllPassFilterDiv(filterID, allPassValueBox.value);
-    setEventListenersOnAllPassList();
+        createAllPassFilterDiv(filterID, allPassValueBox.value);
+        setEventListenersOnAllPassList();
 
-    currentFilter.addAllPassFilter(
-        {
-            id: filterID,
-            filterValue: math.complex(`${filterValue}`)
-        });
+        currentFilter.addAllPassFilter(
+            {
+                id: filterID,
+                filterValue: math.complex(`${filterValue}`)
+            });
 
-    sendRequest();
+        sendRequest();
+    }
 });
 
 removeAllPassBtn.addEventListener('click', (e) => {
@@ -208,10 +210,18 @@ importSignalBtn.addEventListener('change', (e) => {
 });
 
 allPassValueBox.addEventListener('input', (e) => {
-    let strVal = allPassValueBox.value.replace("j", "i");
-    console.log(strVal)
-    let val = math.complex(strVal);
-    getAllPassRequest(val);
+    if (allPassValueBox.value === ''){
+        currentAllPassPlot.updatePlot({
+            x: [0],
+            y: [0],
+        });
+    }
+    else{
+        let strVal = allPassValueBox.value.replace("j", "i");
+        console.log(strVal)
+        let val = math.complex(strVal);
+        getAllPassRequest(val);
+    }
 });
 
 const startInterval = () => {

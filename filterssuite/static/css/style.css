@@ -17,8 +17,7 @@
 
 body {
     font-family: "Inter", sans-serif;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
 }
 
 html {
@@ -54,7 +53,7 @@ html {
     align-items: center;
     align-content: center;
     position: center;
-    margin-left: 700px;
+    margin-left: 630px;
     margin-right: 25px;
     margin-bottom: 5px;
     height: fit-content;
@@ -472,21 +471,20 @@ html {
 .left {
     position: absolute;
     left: -21px;
-    bottom: 70%;
+    bottom: 22%;
     transform: translateY(-50%);
 }
 
 .right {
     position: absolute;
     right: -253px;
-    top: 20%;
+    top: 67%;
     transform: translateY(-50%);
 }
 
 .scroll-images {
     width: 500px;
     height: 200px;
-    margin-top: -70px;
     padding-top: 0px;
     padding-left: 0px;
     display: flex;
@@ -549,7 +547,7 @@ html {
     margin-bottom: 10px;
     grid-area: content7;
     height: 300px;
-    width: 780px;
+    width: 730px;
 }
 
 #content8 {
@@ -557,7 +555,7 @@ html {
     margin-left: 150px;
     grid-area: content8;
     height: 300px;
-    width: 780px;
+    width: 730px;
 }
 
 
@@ -571,7 +569,7 @@ html {
     align-items: center;
     background: #f4f4f4;
     box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
-    margin-left: 800px;
+    margin-left: 750px;
     /*margin-bottom: -2px;*/
     margin-top: -17px;
     height: 20px;
@@ -597,7 +595,7 @@ html {
     padding-top: var(--main-padding);
     width: 435px;
     height: 526px;
-    margin-left: -80px;
+    margin-left: -145px;
 
 }
 
