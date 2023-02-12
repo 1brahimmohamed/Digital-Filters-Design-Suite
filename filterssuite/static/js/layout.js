@@ -20,7 +20,7 @@ let currentImgIndex = 1;
 
 /**  ---------------------------------------------- Event Listeners ---------------------------------------------- **/
 
-
+console.log(navItemsUp)
 // Shapes Side Bar
 navItemsUp.forEach(navItemUpper => {
 
