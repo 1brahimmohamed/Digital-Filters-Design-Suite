@@ -43,14 +43,14 @@ let isDrawing = false,
 
 let currentFilter           = new Filter(),
     unitCircleBoard         = new DrawingBoard('container', boardWidth, boardHeight),
-    magnitudePlot           = new PlottedSignal('plot-1', [0], [0], 'frequency (Hz)', 'magnitude (dB)', '#3f98ce'),
-    phasePlot               = new PlottedSignal('plot-3', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
-    realTimePlot            = new DynamicPlot('plot-2', 'time (s)', 'magnitude (dB)'),
-    realTimeFilteredPlot    = new DynamicPlot('plot-4', 'time (s)', 'magnitude (dB)', '#089841', [0, 50], [-100, 1000]);
+    magnitudePlot           = new PlottedSignal('plot-1', [0], [0], 'frequency', 'magnitude', '#3f98ce'),
+    phasePlot               = new PlottedSignal('plot-3', [0], [0], 'frequency', 'phase', '#f64200'),
+    realTimePlot            = new DynamicPlot('plot-2', 'time (s)', 'magnitude'),
+    realTimeFilteredPlot    = new DynamicPlot('plot-4', 'time (s)', 'magnitude', '#089841', [0, 50], [-100, 1000]);
 
 
-let originalPhasePlot   = new PlottedSignal('plot-page-1', [0], [0], 'frequency (Hz)', 'phase (rad)', '#f64200'),
-    currentAllPassPlot  = new PlottedSignal('plot-page-2', [0], [0], 'frequency (Hz)', 'phase (rad)', '#810b34');
+let originalPhasePlot   = new PlottedSignal('plot-page-1', [0], [0], 'frequency', 'phase', '#f64200'),
+    currentAllPassPlot  = new PlottedSignal('plot-page-2', [0], [0], 'frequency', 'phase', '#810b34');
 
 /**  -------------------------------------- HTML DOM Elements Declaration -------------------------------------- **/
 
