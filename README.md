@@ -1,4 +1,4 @@
-# Digital-Filters-Design-Suite
+# Digital Filters Design Suite
 
 ## Table of contents:
 - [Introduction](#introduction)
